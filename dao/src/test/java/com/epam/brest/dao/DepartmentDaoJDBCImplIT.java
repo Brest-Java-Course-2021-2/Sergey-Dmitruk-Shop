@@ -11,6 +11,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = {"classpath*:test-db.xml","classpath*:test-jdbc-config.xml"})
@@ -51,7 +53,6 @@ assertTrue(departmentSize < departmentDaoJDBCImp.findAll().size());
 
         assertThrows(IllegalArgumentException.class, () -> {
             departmentDaoJDBCImp.create(department);
-            //departmentDaoJDBCImp.create(department);
         });
     }
     @Test
@@ -62,6 +63,41 @@ assertTrue(departmentSize < departmentDaoJDBCImp.findAll().size());
 assertNotNull(quantity);
         assertTrue(quantity > 0);
         assertEquals(Integer.valueOf(2), quantity);
+    }
+    @Test
+    void updateDepartment(){
+        assertNotNull(departmentDaoJDBCImp);
+        List<Department> departments = departmentDaoJDBCImp.findAll();
+        assertTrue(departments.size() > 0);
+
+        Department departmentSrc = departments.get(0);
+        departmentSrc.setNameDepartment("Test");
+        departmentSrc.setResponsible("test");
+        departmentDaoJDBCImp.update(departmentSrc);
+
+        Department departmentDst = departmentDaoJDBCImp.getDepartmentById(departmentSrc.getIdDepartment());
+        assertEquals(departmentSrc.getNameDepartment(), departmentDst.getNameDepartment());
+        assertEquals(departmentSrc.getResponsible(), departmentDst.getResponsible());
+
+    }
+    @Test
+    void getDepartmentById(){
+        assertNotNull(departmentDaoJDBCImp);
+        List<Department> departments = departmentDaoJDBCImp.findAll();
+        assertTrue(departments.size() > 0);
+        Department departmentSrc = departments.get(0);
+       Department departmentDst  = departmentDaoJDBCImp.getDepartmentById(departmentSrc.getIdDepartment());
+assertEquals(departmentSrc.getNameDepartment(), departmentDst.getNameDepartment());
+    }
+
+    @Test
+    void deleteDepartment(){
+        assertNotNull(departmentDaoJDBCImp);
+        departmentDaoJDBCImp.create(new Department("Test"));
+        List<Department> departments = departmentDaoJDBCImp.findAll();
+        assertTrue(departments.size() > 0);
+        departmentDaoJDBCImp.delete(departments.get(0).getIdDepartment());
+        assertEquals(departments.size() - 1, departmentDaoJDBCImp.findAll().size());
     }
 
 

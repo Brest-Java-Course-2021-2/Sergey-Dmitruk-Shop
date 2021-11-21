@@ -24,7 +24,8 @@ public class DepartmentDaoJDBCImp implements DepartmentDao {
 
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    private final String SQL_Select_All_Departments = "select d.id_Department, d.name_Department, d.assortment, d.responsible from department d order by d.name_Department";
+    private final String SQL_Select_All_Departments = "select d.id_Department, d.name_Department, responsible " +
+            "from department d order by d.name_Department";
 
     private final String SQL_Create_Department = "insert into department(name_Department) values(:name_Department)";
 
@@ -32,10 +33,11 @@ public class DepartmentDaoJDBCImp implements DepartmentDao {
             " from department d where lower(d.name_Department) = lower(:name_Department)";
 
     private final String SQL_Count_Records_Department = "select count(*) from department";
-//    private Statement statement;
-//
-//    private ResultSet resultSet;
+    private final String SQL_Update_name_Department = "update department set name_Department =:nameDepartment, responsible = :responsible where id_Department = :idDepartment";
 
+    private final String SQL_Select_Department_By_Id = "select d.id_Department, d.name_Department, responsible "+
+            "from department d where id_Department = :idDepartment ";
+    private final String SQL_Delete_Department = "delete from department where id_department =:idDepartment";
 
     public DepartmentDaoJDBCImp(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
@@ -48,12 +50,7 @@ public class DepartmentDaoJDBCImp implements DepartmentDao {
 
 
 
-//        try{Connection connection = dataSource.getConnection();
-//statement = connection.createStatement();
-//
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
+
 
 
     }
@@ -73,15 +70,7 @@ public class DepartmentDaoJDBCImp implements DepartmentDao {
             System.out.println("Exception");
             throw new IllegalArgumentException("Department with this name already exists");}
 
-//        try{resultSet = statement.executeQuery("select * from department");
-//            while (resultSet.next())
-//            if(department.getNameDepartment().equalsIgnoreCase(resultSet.getString("nameDepartment")))
-//                throw new IllegalArgumentException();
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
             KeyHolder retKeyDep = new GeneratedKeyHolder();
-
             SqlParameterSource sqlParameterSource = new MapSqlParameterSource("name_Department", department.getNameDepartment().toUpperCase());
             namedParameterJdbcTemplate.update(SQL_Create_Department, sqlParameterSource, retKeyDep);
             return (Integer) retKeyDep.getKey();
@@ -90,27 +79,37 @@ public class DepartmentDaoJDBCImp implements DepartmentDao {
 private boolean isDepartmentUnique(String name_Department){
 LOGGER.debug("Check name_Department: {} on unique ", name_Department);
     SqlParameterSource sqlParameterSource = new MapSqlParameterSource("name_Department",name_Department);
-
-
     return namedParameterJdbcTemplate.queryForObject(SQL_Check_Unique_name_Department,sqlParameterSource,Integer.class) == 0;
-
 }
 
 
     @Override
     public Integer update(Department department) {
-        return null;
+        LOGGER.debug("Update department: {}",department);
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("nameDepartment",department.getNameDepartment())
+                .addValue("idDepartment",department.getIdDepartment())
+                        .addValue("responsible",department.getResponsible());
+
+         return namedParameterJdbcTemplate.update(SQL_Update_name_Department,sqlParameterSource);
     }
 
     @Override
     public Integer delete(Integer idDepartment) {
-        return null;
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("idDepartment",idDepartment);
+        return namedParameterJdbcTemplate.update(SQL_Delete_Department,sqlParameterSource);
     }
 
     @Override
     public Integer count() {
-        LOGGER.debug("Count()");
+        LOGGER.debug("count()");
         return namedParameterJdbcTemplate.queryForObject(SQL_Count_Records_Department, new MapSqlParameterSource(),Integer.class);
+    }
+
+    @Override
+    public Department getDepartmentById(Integer idDepartment) {
+
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("idDepartment",idDepartment);
+        return namedParameterJdbcTemplate.queryForObject(SQL_Select_Department_By_Id,sqlParameterSource,new DepartmentRowMapper());
     }
 
 
@@ -121,8 +120,9 @@ LOGGER.debug("Check name_Department: {} on unique ", name_Department);
             Department department = new Department();
             department.setIdDepartment(resultSet.getInt("id_Department"));
             department.setNameDepartment(resultSet.getString("name_Department"));
-            department.setAssortment(resultSet.getInt("assortment"));
             department.setResponsible(resultSet.getString("responsible"));
+
+
             return department;
         }
     }

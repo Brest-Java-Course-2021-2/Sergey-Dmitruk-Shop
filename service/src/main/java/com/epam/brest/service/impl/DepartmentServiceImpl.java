@@ -30,4 +30,22 @@ public class DepartmentServiceImpl implements DepartmentService {
         LOGGER.debug("count()");
        return departmentDao.count();
     }
+
+    @Override
+    public Integer update(Department department) {
+        LOGGER.debug("update({})",department);
+        return this.departmentDao.update(department);
+    }
+
+    @Override
+    public Integer delete(Integer idDepartment) {
+        LOGGER.debug("delete({})",idDepartment);
+        return this.departmentDao.delete(idDepartment);
+    }
+
+    @Override
+    public Department getDepartmentById(Integer idDepartment) {
+        LOGGER.debug("Get department by id({})",idDepartment);
+        return this.departmentDao.getDepartmentById(idDepartment);
+    }
 }

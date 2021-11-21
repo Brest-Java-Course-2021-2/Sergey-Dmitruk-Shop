@@ -10,4 +10,5 @@ public interface DepartmentDao {
     Integer update(Department department);
     Integer delete(Integer idDepartment);
     Integer count();
+    Department getDepartmentById(Integer idDepartment);
 }

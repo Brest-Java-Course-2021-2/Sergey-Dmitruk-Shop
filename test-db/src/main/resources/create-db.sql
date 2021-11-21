@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS department;
 CREATE TABLE department(
     id_Department INT NOT NULL AUTO_INCREMENT,
-  name_Department VARCHAR(20) NOT NULL UNIQUE,
+  name_Department VARCHAR(30) NOT NULL UNIQUE,
 assortment INT,
 responsible VARCHAR(40),
     PRIMARY KEY (id_Department)
