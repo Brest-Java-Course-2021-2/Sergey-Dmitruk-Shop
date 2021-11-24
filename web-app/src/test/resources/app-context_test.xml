@@ -39,6 +39,13 @@
     <bean id="departmentService" class="com.epam.brest.service.impl.DepartmentServiceImpl">
     <constructor-arg name="departmentDao" ref="departmentDao"/>
     </bean>
+    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer" >
+    <property name="locations">
+        <list><value>classpath*:test-db.properties</value>
+            <value>classpath*:sql-department.properties</value>
+        </list>
+    </property>
+    </bean>
 
 
 
@@ -68,6 +75,15 @@
     <bean id="viewResolver" class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
         <property name="templateEngine" ref="templateEngine" />
         <property name="characterEncoding" value="UTF-8" />
+    </bean>
+    <bean id="simpleMappingExceptionResolver" class=
+            "org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+
+
+        <property name="defaultErrorView" value="error"/>
+        <property name="exceptionAttribute" value="exception"/>
+
+        <property name="warnLogCategory" value="example.MvcLogger"/>
     </bean>
 
 </beans>

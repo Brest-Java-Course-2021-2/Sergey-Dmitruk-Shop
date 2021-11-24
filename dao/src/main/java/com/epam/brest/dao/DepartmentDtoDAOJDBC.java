@@ -3,13 +3,15 @@ package com.epam.brest.dao;
 import com.epam.brest.Department;
 import com.epam.brest.dao.dto.DepartmentDtoDAO;
 import com.epam.brest.dto.DepartmentDTO;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import java.util.List;
 
 public class DepartmentDtoDAOJDBC implements DepartmentDtoDAO {
-    private String returnAllDepartments ="select id_Department, name_Department, assortment, responsible from department d order by name_Department";
+    @Value("${returnAllDepartments}")
+    private String returnAllDepartments;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     public DepartmentDtoDAOJDBC(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {

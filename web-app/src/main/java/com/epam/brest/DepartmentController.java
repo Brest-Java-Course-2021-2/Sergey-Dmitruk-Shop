@@ -53,8 +53,7 @@ return "department";
         return "redirect:/departments";
     }
     @GetMapping(value = "/department/{id}/delete")
-    public String deleteDepartment(@PathVariable Integer id, Model model){
-
+    public String deleteDepartment(@PathVariable Integer id){
         departmentService.delete(id);
         return "redirect:/departments";
     }

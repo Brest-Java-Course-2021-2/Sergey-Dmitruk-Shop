@@ -3,6 +3,7 @@ package com.epam.brest.dao;
 import com.epam.brest.Department;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -24,41 +25,36 @@ public class DepartmentDaoJDBCImp implements DepartmentDao {
 
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    private final String SQL_Select_All_Departments = "select d.id_Department, d.name_Department, responsible " +
-            "from department d order by d.name_Department";
+@Value("${SQL_Select_All_Departments}")
+    private  String sqlGetAllDepartment;
 
-    private final String SQL_Create_Department = "insert into department(name_Department) values(:name_Department)";
+    @Value("${SQL_Create_Department}")
+    private  String sqlCreateDepartment;
 
-    private final String SQL_Check_Unique_name_Department ="select count(d.name_Department) " +
-            " from department d where lower(d.name_Department) = lower(:name_Department)";
+    @Value("${SQL_Check_Unique_name_Department}")
+    private  String sqlUniqueNameDepartment;
 
-    private final String SQL_Count_Records_Department = "select count(*) from department";
-    private final String SQL_Update_name_Department = "update department set name_Department =:nameDepartment, responsible = :responsible where id_Department = :idDepartment";
+    @Value("${SQL_Count_Records_Department}")
+    private  String sqlCountDepartment;
 
-    private final String SQL_Select_Department_By_Id = "select d.id_Department, d.name_Department, responsible "+
-            "from department d where id_Department = :idDepartment ";
-    private final String SQL_Delete_Department = "delete from department where id_department =:idDepartment";
+    @Value("${SQL_Update_name_Department}")
+    private  String sqlUpdateDepartment;
+
+    @Value("${SQL_Select_Department_By_Id}")
+    private  String sqlDepartmentById;
+
+    @Value("${SQL_Delete_Department}")
+    private  String sqlDeleteDepartment;
+
 
     public DepartmentDaoJDBCImp(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
-
-    @Deprecated
-    public DepartmentDaoJDBCImp(DataSource dataSource) {
-        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-
-
-
-
-
-
-    }
-
     @Override
     public List<Department> findAll() {
         LOGGER.debug("Start: findAll()");
-        return namedParameterJdbcTemplate.query(SQL_Select_All_Departments, new DepartmentRowMapper());
+        return namedParameterJdbcTemplate.query(sqlGetAllDepartment, new DepartmentRowMapper());
     }
 
     @Override
@@ -72,14 +68,14 @@ public class DepartmentDaoJDBCImp implements DepartmentDao {
 
             KeyHolder retKeyDep = new GeneratedKeyHolder();
             SqlParameterSource sqlParameterSource = new MapSqlParameterSource("name_Department", department.getNameDepartment().toUpperCase());
-            namedParameterJdbcTemplate.update(SQL_Create_Department, sqlParameterSource, retKeyDep);
+            namedParameterJdbcTemplate.update(sqlCreateDepartment, sqlParameterSource, retKeyDep);
             return (Integer) retKeyDep.getKey();
 
     }
 private boolean isDepartmentUnique(String name_Department){
 LOGGER.debug("Check name_Department: {} on unique ", name_Department);
     SqlParameterSource sqlParameterSource = new MapSqlParameterSource("name_Department",name_Department);
-    return namedParameterJdbcTemplate.queryForObject(SQL_Check_Unique_name_Department,sqlParameterSource,Integer.class) == 0;
+    return namedParameterJdbcTemplate.queryForObject(sqlUniqueNameDepartment,sqlParameterSource,Integer.class) == 0;
 }
 
 
@@ -90,26 +86,26 @@ LOGGER.debug("Check name_Department: {} on unique ", name_Department);
                 .addValue("idDepartment",department.getIdDepartment())
                         .addValue("responsible",department.getResponsible());
 
-         return namedParameterJdbcTemplate.update(SQL_Update_name_Department,sqlParameterSource);
+         return namedParameterJdbcTemplate.update(sqlUpdateDepartment,sqlParameterSource);
     }
 
     @Override
     public Integer delete(Integer idDepartment) {
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("idDepartment",idDepartment);
-        return namedParameterJdbcTemplate.update(SQL_Delete_Department,sqlParameterSource);
+        return namedParameterJdbcTemplate.update(sqlDeleteDepartment,sqlParameterSource);
     }
 
     @Override
     public Integer count() {
         LOGGER.debug("count()");
-        return namedParameterJdbcTemplate.queryForObject(SQL_Count_Records_Department, new MapSqlParameterSource(),Integer.class);
+        return namedParameterJdbcTemplate.queryForObject(sqlCountDepartment, new MapSqlParameterSource(),Integer.class);
     }
 
     @Override
     public Department getDepartmentById(Integer idDepartment) {
 
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("idDepartment",idDepartment);
-        return namedParameterJdbcTemplate.queryForObject(SQL_Select_Department_By_Id,sqlParameterSource,new DepartmentRowMapper());
+        return namedParameterJdbcTemplate.queryForObject(sqlDepartmentById,sqlParameterSource,new DepartmentRowMapper());
     }
 
 

@@ -8,15 +8,17 @@
 
 
     <bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="org.h2.Driver"/>
-        <property name="url" value="jdbc:h2:mem:test-db;MODE=MySQL;DB_CLOSE_DELAY=-1"/>
-        <property name="username" value="sa"/>
-        <property name="password" value=""/>
+        <property name="driverClassName" value="${db.className}"/>
+        <property name="url" value="${db.url}"/>
+        <property name="username" value="${db.userName}"/>
+        <property name="password" value="${db.password}"/>
     </bean>
 
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
+
+
 
     <jdbc:initialize-database data-source="dataSource">
         <jdbc:script location="classpath*:create-db.sql"/>

@@ -39,7 +39,14 @@
     <bean id="departmentService" class="com.epam.brest.service.impl.DepartmentServiceImpl">
         <constructor-arg name="departmentDao" ref="departmentDao"/>
     </bean>
-
+    <bean id="templateEngine"
+          class="org.thymeleaf.spring5.SpringTemplateEngine">
+        <property name="templateResolvers">
+            <set>
+                <ref bean="templateResolver" />
+            </set>
+        </property>
+    </bean>
     <!-- Thymeleaf Template Resolver -->
     <bean id="templateResolver"
           class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
@@ -52,19 +59,19 @@
     </bean>
 
     <!-- Thymeleaf Template Engine (Spring5-specific version) -->
-    <bean id="templateEngine"
-          class="org.thymeleaf.spring5.SpringTemplateEngine">
-        <property name="templateResolvers">
-            <set>
-                <ref bean="templateResolver" />
-            </set>
-        </property>
-    </bean>
+
 
     <!-- Thymeleaf View Resolver - implementation of Spring's ViewResolver interface -->
     <bean id="viewResolver" class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
         <property name="templateEngine" ref="templateEngine" />
         <property name="characterEncoding" value="UTF-8" />
+    </bean>
+    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer" >
+    <property name="locations">
+        <list><value>classpath*:test-db.properties</value>
+            <value>classpath*:sql-department.properties</value>
+        </list>
+    </property>
     </bean>
 
 </beans>

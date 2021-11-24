@@ -51,6 +51,7 @@
         </div>
     </nav>
 </header>
+
 <div class="container-fluid">
     <table class="table table-striped">
         <thead class="table-info">
@@ -63,16 +64,17 @@
         </thead>
         <tbody>
 
-        <tr th:each="department : ${departments}">
+        <tr th:each="department : ${departments}"
+        >
             <td th:text="${department.name_Department}">Butcher's</td>
             <td th:text="${department.assortment}">12</tdth:>
             <td th:text="${department.responsible}">
                 Inna Vladimirovna
             </td>
             <td><a href="#" class="text-success" th:href="@{|/department/${department.id_Department}|}">Edit</a>
-                <span data-bs-toggle="modal" data-bs-target="#deleteDialog"
+                <span data-bs-toggle="modal" data-bs-target="#deleteDialog"  data-target="#modal-warning"
                      >
-                <a href="#" class="text-danger"
+                <a href="#"  class="text-danger"
                    >Delete</a>
                 </span>
             </td>
@@ -103,15 +105,16 @@
             </div>
             <div class="modal-body"  >
                 <p >Are you sure you want to delete the department
+                    <span th:text="${departmentName}">
                     </span>
                      </p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger">Delete</button>
-            </div>
+               <a href="#"  type="button" class="btn btn-danger">Delete</a>
         </div>
     </div>
+</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
