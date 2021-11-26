@@ -61,7 +61,7 @@ public class DepartmentDaoJDBCImp implements DepartmentDao {
     public Integer create(Department department) {
         LOGGER.debug("Start: create({})",department);
 
-        if(!isDepartmentUnique(department.getNameDepartment())){
+        if(!isDepartmentUnique(department.getNameDepartment())||department.getNameDepartment()==null){
             LOGGER.warn("Department with this name already exists",department.getNameDepartment());
             System.out.println("Exception");
             throw new IllegalArgumentException("Department with this name already exists");}
