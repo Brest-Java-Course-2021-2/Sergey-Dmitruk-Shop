@@ -61,20 +61,36 @@
           th:action="@{${#httpServletRequest.servletPath}}"
           th:method="@{post}">
 
+        <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+            <p>Please fix errors below:</p>
+
+        </div>
+
         <input
                type="hidden"
                th:field="*{idDepartment}"/>
 
         <div class="form-group">
            <label>Department name</label>
-            <input type="text" class="form-control" id="department_name"th:field="*{nameDepartment}"   value="">
+            <input type="text" class="form-control" id="department_name"th:field="*{nameDepartment}"/>
 
+            <div th:if="${#fields.hasErrors('nameDepartment')}" class="text-danger"
+            th:errors="*{nameDepartment}">
+                [errors]
+
+            </div>
 
             <div class="mb-3">
             <label>Responsible</label>
             <input type="text" class="form-control" id="responsible" th:field="*{responsible}" value="">
+                <div th:if="${#fields.hasErrors('responsible')}" class="text-danger"
+                     th:errors="*{responsible}">
+                    [errors]
+
+                </div>
             </div>
             <a href="#" class="btn btn-primary" th:href="@{/departments}"th:onclick="@{document.forms['departmentForm'].submit(); return false;}">Save</a>
+
             <a href="#"
                class="btn btn-secondary me-1" th:href="@{/departments}">
                Cancel</a>

@@ -39,17 +39,18 @@ class DepartmentDaoJDBCImplIT {
     void create(){
         assertNotNull(departmentDaoJDBCImp);
         int departmentSize = departmentDaoJDBCImp.findAll().size();
-Department department = new Department("Test");
+Department department = new Department("Test","testResponsible");
 Integer departmentId =
  departmentDaoJDBCImp.create(department);
         System.out.println(departmentId);
 assertNotNull(departmentId);
 assertTrue(departmentSize < departmentDaoJDBCImp.findAll().size());
+        assertEquals("testResponsible",departmentDaoJDBCImp.getDepartmentById(departmentId).getResponsible());
     }
     @Test
     void tryToCreateEqualsDepartments() {
         assertNotNull(departmentDaoJDBCImp);
-        Department department = new Department("Dairy");
+        Department department = new Department("Dairy","Test");
 
         assertThrows(IllegalArgumentException.class, () -> {
             departmentDaoJDBCImp.create(department);
@@ -93,7 +94,7 @@ assertEquals(departmentSrc.getNameDepartment(), departmentDst.getNameDepartment(
     @Test
     void deleteDepartment(){
         assertNotNull(departmentDaoJDBCImp);
-        departmentDaoJDBCImp.create(new Department("Test"));
+        departmentDaoJDBCImp.create(new Department("Test", "testResponsible"));
         List<Department> departments = departmentDaoJDBCImp.findAll();
         assertTrue(departments.size() > 0);
         departmentDaoJDBCImp.delete(departments.get(0).getIdDepartment());

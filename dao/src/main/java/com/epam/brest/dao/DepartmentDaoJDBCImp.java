@@ -67,8 +67,10 @@ public class DepartmentDaoJDBCImp implements DepartmentDao {
             throw new IllegalArgumentException("Department with this name already exists");}
 
             KeyHolder retKeyDep = new GeneratedKeyHolder();
-            SqlParameterSource sqlParameterSource = new MapSqlParameterSource("name_Department", department.getNameDepartment().toUpperCase());
-            namedParameterJdbcTemplate.update(sqlCreateDepartment, sqlParameterSource, retKeyDep);
+            SqlParameterSource sqlParameterSource = new MapSqlParameterSource("nameDepartment", department.getNameDepartment().toUpperCase())
+                    .addValue("responsible",department.getResponsible());
+
+        namedParameterJdbcTemplate.update(sqlCreateDepartment, sqlParameterSource, retKeyDep);
             return (Integer) retKeyDep.getKey();
 
     }
@@ -82,6 +84,7 @@ LOGGER.debug("Check name_Department: {} on unique ", name_Department);
     @Override
     public Integer update(Department department) {
         LOGGER.debug("Update department: {}",department);
+
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("nameDepartment",department.getNameDepartment())
                 .addValue("idDepartment",department.getIdDepartment())
                         .addValue("responsible",department.getResponsible());

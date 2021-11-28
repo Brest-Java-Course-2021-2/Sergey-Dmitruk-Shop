@@ -10,9 +10,12 @@ private String responsible;
  public Department(){
 
  }
-
-    public Department(String nameDepartment) {
+    public Department(String nameDepartment){
         this.nameDepartment = nameDepartment;
+    }
+    public Department(String nameDepartment, String responsible) {
+        this.nameDepartment = nameDepartment;
+        this.responsible = responsible;
     }
 
     public Department(Integer idDepartment, String nameDepartment) {

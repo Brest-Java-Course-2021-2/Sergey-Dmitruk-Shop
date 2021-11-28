@@ -92,18 +92,57 @@ class DepartmentControllerIT {
         assertNotNull(departmentService);
         Integer departmentsSizeBefore = departmentService.count();
         assertNotNull(departmentsSizeBefore);
-        Department department = new Department("Fish");
+        Department department = new Department("Fish","testFish");
 
         mockMvc.perform(
                         MockMvcRequestBuilders.post("/department")
                                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                                 .param("nameDepartment", department.getNameDepartment())
+                                .param("responsible",department.getResponsible())
                 ).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/departments"))
                 .andExpect(redirectedUrl("/departments"));
 
         assertEquals(departmentsSizeBefore, departmentService.count() - 1);
+    }
+    @Test
+    void shouldFailDepartmentOnEmptyName() throws Exception {
+
+        Department department = new Department("");
+
+        mockMvc.perform(
+                        MockMvcRequestBuilders.post("/department")
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                                .param("nameDepartment", department.getNameDepartment())
+                ).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("department"))
+                .andExpect(
+                        model().attributeHasFieldErrors("department", "nameDepartment")
+                );
+
+
+    }
+    @Test
+    void shouldFailDepartmentOnEmptyResponsible() throws Exception {
+
+        Department department = new Department("Test","");
+
+        mockMvc.perform(
+                        MockMvcRequestBuilders.post("/department")
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                                .param("nameDepartment", department.getNameDepartment())
+                                .param("responsible", department.getResponsible())
+
+                ).andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("department"))
+                .andExpect(
+                        model().attributeHasFieldErrors("department", "responsible")
+                );
+
+
     }
     @Test
     public void shouldEditDepartmentPageById() throws Exception {

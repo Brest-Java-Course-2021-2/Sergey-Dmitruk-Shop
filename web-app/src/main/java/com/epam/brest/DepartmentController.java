@@ -3,8 +3,10 @@ package com.epam.brest;
 
 import com.epam.brest.service.DepartmentDTOService;
 import com.epam.brest.service.DepartmentService;
+import com.epam.brest.validators.DepartmentValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,11 +18,14 @@ public class DepartmentController {
 
     private DepartmentDTOService departmentDTOService;
 
+    private final DepartmentValidator validator;
 
 
-    public DepartmentController(DepartmentDTOService departmentDTOService,DepartmentService departmentService) {
+
+    public DepartmentController(DepartmentDTOService departmentDTOService, DepartmentService departmentService, DepartmentValidator validator) {
         this.departmentDTOService = departmentDTOService;
         this.departmentService=departmentService;
+        this.validator = validator;
     }
 
     @GetMapping(value = "/departments")
@@ -37,7 +42,13 @@ public class DepartmentController {
         return "department";
     }
     @PostMapping(value = "/department")
-    public String addDepartment(Department department) {
+    public String addDepartment(Department department, BindingResult bindingResult) {
+
+        validator.validate(department,bindingResult);
+
+       if(bindingResult.hasErrors())
+            return "department";
+
         this.departmentService.create(department);
         return "redirect:/departments";
     }
@@ -48,7 +59,13 @@ public class DepartmentController {
 return "department";
     }
     @PostMapping(value = "/department/{id}")
-    public String updateDepartment(Department department){
+    public String updateDepartment(Department department,  BindingResult bindingResult){
+
+        validator.validate(department,bindingResult);
+
+        if(bindingResult.hasErrors())
+            return "department";
+
         this.departmentService.update(department);
         return "redirect:/departments";
     }
