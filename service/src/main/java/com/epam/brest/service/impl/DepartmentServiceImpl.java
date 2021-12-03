@@ -5,8 +5,11 @@ import com.epam.brest.dao.DepartmentDao;
 import com.epam.brest.service.DepartmentService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collection;
 
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
@@ -48,4 +51,6 @@ public class DepartmentServiceImpl implements DepartmentService {
         LOGGER.debug("Get department by id({})",idDepartment);
         return this.departmentDao.getDepartmentById(idDepartment);
     }
+
+
 }
