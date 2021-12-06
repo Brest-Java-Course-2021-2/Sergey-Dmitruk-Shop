@@ -67,8 +67,10 @@ class DepartmentControllerIT {
                         allOf(
                                 hasProperty("id_Department", is(1)),
                                 hasProperty("name_Department", is("Dairy")),
-                                hasProperty("assortment", is(0)),
-                                hasProperty("responsible", is("Anastasia Alexandrovna"))
+                                hasProperty("assortment", is(2)),
+                                hasProperty("responsible", is("Anastasia Alexandrovna")),
+                                hasProperty("total_Cost", is(1000))
+
                         )
 
                 )))
@@ -79,10 +81,12 @@ class DepartmentControllerIT {
 
         hasProperty("id_Department", is(2)),
                 hasProperty("name_Department", is("Butcher")),
-                hasProperty("assortment", is(0)),
-                hasProperty("responsible", is("Inna Vladimirovna"))
+                hasProperty("assortment", is(1)),
+                hasProperty("responsible", is("Inna Vladimirovna")),
+                hasProperty("total_Cost", is(1000))
 
-                                )
+
+                  )
                 )));
 
     }
@@ -181,7 +185,7 @@ class DepartmentControllerIT {
     public void shouldDeleteDepartment() throws Exception {
         Integer countBefore = departmentService.count();
         mockMvc.perform(
-                        MockMvcRequestBuilders.get("/department/1/delete")
+                        MockMvcRequestBuilders.get("/department/3/delete")
                 ).andExpect(status().isFound())
                 .andExpect(view().name("redirect:/departments"))
                 .andExpect(redirectedUrl("/departments"));

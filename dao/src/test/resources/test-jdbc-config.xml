@@ -7,6 +7,10 @@
 
     <bean name="departmentDao" class="com.epam.brest.dao.DepartmentDaoJDBCImp">
 <constructor-arg ref="namedParameterJdbcTemplate"/>
+    </bean>
+
+        <bean name ="departmentDtoDAO" class="com.epam.brest.dao.DepartmentDtoDAOJDBC">
+            <constructor-arg ref="namedParameterJdbcTemplate"/>
 
     </bean>
     <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">

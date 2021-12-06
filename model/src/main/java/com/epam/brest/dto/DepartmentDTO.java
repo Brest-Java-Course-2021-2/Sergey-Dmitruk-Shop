@@ -6,6 +6,15 @@ public class DepartmentDTO {
     private String name_Department;
     private Integer assortment;
     private String responsible;
+    private Integer total_Cost;
+
+    public Integer getTotal_Cost() {
+        return total_Cost;
+    }
+
+    public void setTotal_Cost(Integer total_Cost) {
+        this.total_Cost = total_Cost;
+    }
 
     public Integer getId_Department() {
         return id_Department;

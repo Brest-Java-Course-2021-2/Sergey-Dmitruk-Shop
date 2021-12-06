@@ -58,16 +58,17 @@
         <tr>
             <th scope="col">Name</th>
             <th scope="col">Assortment</th>
+            <th scope="col">Total Cost</th>
             <th scope="col">Responsible</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
 
-        <tr th:each="department : ${departments}"
-        >
+        <tr th:each="department : ${departments}">
             <td th:text="${department.name_Department}">Butcher's</td>
-            <td th:text="${department.assortment}">12</tdth:>
+            <td th:text="${department.assortment}">12</td>
+            <td th:text="${department.total_Cost}">100</td>
             <td th:text="${department.responsible}">
                 Inna Vladimirovna
             </td>

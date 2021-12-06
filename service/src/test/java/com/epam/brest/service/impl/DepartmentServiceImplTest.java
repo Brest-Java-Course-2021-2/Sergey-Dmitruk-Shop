@@ -45,7 +45,7 @@ class DepartmentServiceImplTest {
                 departmentService.count();
         assertNotNull(quantity);
         assertTrue(quantity > 0);
-        assertEquals(Integer.valueOf(2), quantity);
+        assertEquals(Integer.valueOf(3), quantity);
     }
 
     @Test
