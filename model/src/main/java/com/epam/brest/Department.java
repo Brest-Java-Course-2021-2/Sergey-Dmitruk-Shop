@@ -3,11 +3,11 @@ package com.epam.brest;
 public class Department {
 private Integer idDepartment;
 private String nameDepartment;
-private Integer assortment;
+
 private String responsible;
 
 
- public Department(){
+    public Department(){
 
  }
     public Department(String nameDepartment){
@@ -39,13 +39,7 @@ private String responsible;
         this.nameDepartment = nameDepartment;
     }
 
-    public Integer getAssortment() {
-        return assortment;
-    }
 
-    public void setAssortment(Integer assortment) {
-        this.assortment = assortment;
-    }
 
     public String getResponsible() {
         return responsible;
@@ -60,7 +54,7 @@ private String responsible;
         return "Department{" +
                 "idDepartment=" + idDepartment +
                 ", nameDepartment='" + nameDepartment + '\'' +
-                ", assortment=" + assortment +
+                ", assortment=" +
                 ", responsible='" + responsible + '\'' +
                 '}';
     }

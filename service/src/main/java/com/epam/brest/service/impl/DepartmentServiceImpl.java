@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
@@ -34,22 +35,31 @@ public class DepartmentServiceImpl implements DepartmentService {
        return departmentDao.count();
     }
 
+    @Transactional
     @Override
     public Integer update(Department department) {
         LOGGER.debug("update({})",department);
         return this.departmentDao.update(department);
     }
 
+    @Transactional
     @Override
     public Integer delete(Integer idDepartment) {
         LOGGER.debug("delete({})",idDepartment);
         return this.departmentDao.delete(idDepartment);
     }
 
+    @Transactional
     @Override
     public Department getDepartmentById(Integer idDepartment) {
         LOGGER.debug("Get department by id({})",idDepartment);
         return this.departmentDao.getDepartmentById(idDepartment);
+    }
+
+    @Override
+    public List<Department> departmentsFindAll() {
+        LOGGER.debug("departmentsFindAll()");
+        return this.departmentDao.findAll();
     }
 
 
