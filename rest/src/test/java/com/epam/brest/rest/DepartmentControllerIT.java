@@ -4,7 +4,6 @@ import com.epam.brest.Department;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hamcrest.core.Is;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,23 +11,19 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultHandler;
-import org.springframework.test.web.servlet.ResultMatcher;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.Optional;
-
 import static net.bytebuddy.matcher.ElementMatchers.is;
 import static net.bytebuddy.matcher.ElementMatchers.isVariable;
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -46,18 +41,19 @@ class DepartmentControllerIT {
 
     private MockMvc mockMvc;
 
+
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(departmentController)
                 .setMessageConverters(new MappingJackson2HttpMessageConverter())
+              //  .setControllerAdvice(customExceptionHandler)
                 .alwaysDo(MockMvcResultHandlers.print())
-                .build();
+                .build();;
     }
 
     @AfterEach
     void tearDown() {
     }
-
 
 
 
@@ -93,38 +89,47 @@ class DepartmentControllerIT {
 
     @Test
     void shouldDeleteDepartment() throws Exception{
+
         mockMvc.perform(
                         delete("/departments/{id}",3)
                 ).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andDo(mvcResult -> mockMvc.perform(get("/departmentsDto"))
-                        .andExpect(status().isOk())
-                        .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(jsonPath("$[*]").isArray())
-                        .andExpect(jsonPath("$",hasSize(2))));
+                .andExpect(content().string("1"));
+
 
     }
 
-    //Return 415 status
 
-//    @Test
-//    void shouldUpdateDepartment() throws Exception{
-//        logger.debug("shouldUpdateDepartment()");
-//        mockMvc.perform(
-//                put("/departments")
-//                ).andDo(MockMvcResultHandlers.print())
-//                .andExpect(status().isOk());
-//    }
-//
-//    @Test
-//    void shouldCreateDepartment() throws Exception{ mockMvc.perform(
-//                    post("/departments")
-//            ).andDo(MockMvcResultHandlers.print())
-//            .andExpect(status().isOk());
-//    }
+    @Test
+    void shouldUpdateDepartment() throws Exception{
+String department  = mockMvc.perform(get("/departments/{id}",2)).toString();
+        mockMvc.perform(
+                put("/departments")
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(mapper.writeValueAsString(department))
+                        .accept("application/json")
+                )
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk());
+    }
 
+    @Test
+    void shouldCreateDepartment() throws Exception{
+        Department department = new Department("test");
 
+        String request=
+        mapper.writeValueAsString(department);
+
+        mockMvc.perform(
+
+                    post("/departments")
+                            .contentType("application/json")
+                            .content(request)
+            ).andDo(MockMvcResultHandlers.print())
+            .andExpect(status().isOk());
+
+    }
 
 
 }
