@@ -61,7 +61,7 @@ class DepartmentControllerIT {
     @Test
     void shouldDepartmentsPage() throws Exception {
         mockMvc.perform(
-                        get("/departmentsDto")
+                        get("/departments_dto")
                 ).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))

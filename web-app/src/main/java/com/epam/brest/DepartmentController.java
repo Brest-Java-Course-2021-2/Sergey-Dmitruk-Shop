@@ -14,11 +14,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class DepartmentController {
-    private DepartmentService departmentService;
+    private final DepartmentService departmentService;
 
-    private DepartmentDTOService departmentDTOService;
+    private final DepartmentDTOService departmentDTOService;
 
-    private final DepartmentValidator validator;
+
+
+    private final   DepartmentValidator validator;
+
+
 
 
 

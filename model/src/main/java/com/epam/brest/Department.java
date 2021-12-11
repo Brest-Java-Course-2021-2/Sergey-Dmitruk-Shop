@@ -6,6 +6,11 @@ private String nameDepartment;
 
 private String responsible;
 
+public Department(Integer idDepartment){
+    this.idDepartment = idDepartment;
+
+}
+
 
     public Department(){
 

@@ -30,7 +30,7 @@ Logger logger =  LogManager.getLogger(DepartmentController.class);
     }
 
 
-    @GetMapping(value = "/departmentsDto")
+    @GetMapping(value = "/departments_dto")
     public final Collection<DepartmentDTO> departments(){
         logger.debug("departments()");
         return departmentDTOService.findAllDepartments();
