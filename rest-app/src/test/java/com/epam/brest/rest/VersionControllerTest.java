@@ -17,7 +17,6 @@ import org.junit.jupiter.api.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
-//@ContextConfiguration(locations = {"classpath:app-context_test.xml"})
 class VersionControllerTest {
 
     private VersionController controller =

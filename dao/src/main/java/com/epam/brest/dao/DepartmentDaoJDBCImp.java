@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 
@@ -18,8 +19,10 @@ import java.sql.SQLException;
 
 import java.util.List;
 
-
+@Component
 public class DepartmentDaoJDBCImp implements DepartmentDao {
+
+
 
     private static final Logger LOGGER = LogManager.getLogger(DepartmentDaoJDBCImp.class);
 

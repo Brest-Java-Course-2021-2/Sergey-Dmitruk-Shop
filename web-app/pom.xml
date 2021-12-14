@@ -6,16 +6,17 @@
   <parent>
     <artifactId>shop</artifactId>
     <groupId>com.epam.brest</groupId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.example</groupId>
   <artifactId>web-app</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <packaging>war</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
 
   <name>web-app Maven Webapp</name>
+
 
 
   <properties>
@@ -25,54 +26,41 @@
   </properties>
 
   <dependencies>
-    <dependency>
-      <groupId>com.epam.brest</groupId>
-      <artifactId>model</artifactId>
-    </dependency>
 
-    <dependency>
-      <groupId>com.epam.brest</groupId>
-      <artifactId>service-api</artifactId>
-    </dependency>
     <dependency>
       <groupId>com.epam.brest</groupId>
       <artifactId>rest-service</artifactId>
     </dependency>
 
+
     <dependency>
-      <groupId>com.epam.brest</groupId>
-      <artifactId>test-db</artifactId>
-      <scope>test</scope>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>com.epam.brest</groupId>
-      <artifactId>service</artifactId>
-      <scope>test</scope>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-thymeleaf</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context</artifactId>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
     </dependency>
+
     <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-web</artifactId>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
+
     <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-webmvc</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.thymeleaf</groupId>
-      <artifactId>thymeleaf-spring5</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-devtools</artifactId>
+      <scope>test</scope>
     </dependency>
 
 <!--    test-->
+
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
@@ -81,10 +69,7 @@
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-test</artifactId>
-    </dependency>
+
     <dependency>
       <groupId>org.hamcrest</groupId>
       <artifactId>hamcrest-all</artifactId>
@@ -99,18 +84,9 @@
 
   <build>
     <plugins>
-      <!-- Embedded Jetty HTTP Server for testing web application -->
       <plugin>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-maven-plugin</artifactId>
-        <configuration>
-          <webApp>
-            <contextPath>/</contextPath>
-          </webApp>
-          <httpConnector>
-            <port>8080</port>
-          </httpConnector>
-        </configuration>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
     </plugins>
   </build>

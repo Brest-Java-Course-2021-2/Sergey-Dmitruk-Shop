@@ -2,10 +2,13 @@ package com.epam.brest.service.impl;
 
 import com.epam.brest.Department;
 import com.epam.brest.service.DepartmentService;
+import com.epam.brest.service.config.ServiceTestConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +19,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(locations = {"classpath*:test-db.xml", "classpath*:service-context-test.xml"})
+@Import({ServiceTestConfiguration.class})
+@PropertySource({"classpath:sql-department.properties"})
 @Transactional
 class DepartmentServiceImplIT {
 

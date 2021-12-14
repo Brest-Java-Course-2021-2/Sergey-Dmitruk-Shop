@@ -1,5 +1,6 @@
 package com.epam.brest.restservice;
 
+import com.epam.brest.config.RestServiceConfigTest;
 import com.epam.brest.dto.DepartmentDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(locations = {"classpath:app-context_test.xml"})
+@Import({RestServiceConfigTest.class})
 class DepartmentDtoRestServiceTest {
     private final Logger logger = LogManager.getLogger(DepartmentDtoRestServiceTest.class);
     private String url = "http://localhost:8080/departments_dto";

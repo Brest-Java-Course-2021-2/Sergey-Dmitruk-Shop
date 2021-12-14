@@ -57,22 +57,6 @@ class DepartmentDaoJDBCImpTest {
     }
 
     @Test
-    void create() {
-    }
-
-    @Test
-    void update() {
-    }
-
-    @Test
-    void delete() {
-    }
-
-    @Test
-    void count() {
-    }
-
-    @Test
     void getDepartmentById() {
         String sql = "test";
         ReflectionTestUtils.setField(departmentDaoJDBC, "sqlDepartmentById", sql);
