@@ -10,7 +10,7 @@ responsible VARCHAR(40),
 CREATE TABLE product(
 id_Product INT NOT NULL AUTO_INCREMENT,
 name_Product VARCHAR(50) NOT NULL UNIQUE,
-parent_Department VARCHAR(50) NOT NULL,
+parent_Department_Name VARCHAR(50) NOT NULL,
 delivery_Date DATE NOT NUll,
 price INT NOT NULL,
 id_Department INT NOT NULL,

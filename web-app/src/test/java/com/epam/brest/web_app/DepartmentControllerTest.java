@@ -184,7 +184,7 @@ mockServer.verify();
     @Test
     public void shouldEditDepartmentPageById() throws Exception {
 
-        logger.debug("shouldEditDepartmentPageById{()}");
+        logger.debug("shouldEditDepartmentPageById()");
 
         Integer id = 1;
         Department department =
@@ -216,7 +216,7 @@ mockServer.verify();
         String testName = RandomStringUtils.randomAlphabetic(Department_Name_Size);
         String testResponsible = RandomStringUtils.randomAlphabetic(Department_Responsible_Size);
 
-        logger.debug("shouldUpdateDepartment{()}");
+        logger.debug("shouldUpdateDepartment()");
 
         mockServer.expect(ExpectedCount.once(), MockRestRequestMatchers.requestTo(new URI(URL_DEPARTMENTS)))
                 .andExpect(MockRestRequestMatchers.method(HttpMethod.PUT))
@@ -241,7 +241,7 @@ mockServer.verify();
 
     @Test
     public void shouldDeleteDepartment() throws Exception {
-        logger.debug("shouldDeleteDepartment{()}");
+        logger.debug("shouldDeleteDepartment()");
         Integer id = 3;
 
         mockServer.expect(ExpectedCount.once(), MockRestRequestMatchers.requestTo(new URI(URL_DEPARTMENTS+"/" +id)))

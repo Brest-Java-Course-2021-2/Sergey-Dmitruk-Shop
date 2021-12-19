@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @Import({ServiceTestConfiguration.class})
-@PropertySource({"classpath:sql-department.properties"})
+@PropertySource({"classpath:sql-dao.properties"})
 @Transactional
 class DepartmentServiceImplIT {
 

@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(SpringExtension.class)
 @Import({ServiceTestConfiguration.class})
-@PropertySource({"classpath:sql-department.properties"})
+@PropertySource({"classpath:sql-dao.properties"})
 @Transactional
 public class DepartmentDtoServiceIT {
 

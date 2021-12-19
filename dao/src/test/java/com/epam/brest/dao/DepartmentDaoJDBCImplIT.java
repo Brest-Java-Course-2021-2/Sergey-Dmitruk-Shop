@@ -22,13 +22,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DataJdbcTest
 @Import({DepartmentDaoJDBCImp.class})
-@PropertySource({"classpath:sql-department.properties"})
+@PropertySource({"classpath:sql-dao.properties"})
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ContextConfiguration(classes = SpringJdbcConfig.class)
 @Transactional
 @Rollback
 class DepartmentDaoJDBCImplIT {
   private   DepartmentDaoJDBCImp departmentDaoJDBCImp;
+
+
+
+
     @Autowired
     public DepartmentDaoJDBCImplIT(DepartmentDao departmentDao) {
         this.departmentDaoJDBCImp = (DepartmentDaoJDBCImp) departmentDao;

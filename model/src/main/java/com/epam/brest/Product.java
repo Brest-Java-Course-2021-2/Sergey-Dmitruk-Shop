@@ -5,10 +5,36 @@ import java.time.LocalDate;
 public class Product {
     private Integer idProduct;
     private String nameProduct;
-    private String parentDepartment;
+    private String parentDepartmentName;
     private LocalDate DeliveryTime;
-    private LocalDate Expiration;
+    private Integer price;
     private Integer ipDepartment;
+
+    public Product(String nameProduct, String parentDepartmentName, LocalDate deliveryTime, Integer price) {
+        this.nameProduct = nameProduct;
+        this.parentDepartmentName = parentDepartmentName;
+        DeliveryTime = deliveryTime;
+        this.price = price;
+
+    }
+
+    public Product(String nameProduct, String parentDepartmentName) {
+        this.nameProduct = nameProduct;
+        this.parentDepartmentName = parentDepartmentName;
+    }
+
+    public Product(){
+
+    }
+
+    public Product(Integer idProduct, String nameProduct, String parentDepartmentName, LocalDate deliveryTime, Integer price, Integer ipDepartment) {
+        this.idProduct = idProduct;
+        this.nameProduct = nameProduct;
+        this.parentDepartmentName = parentDepartmentName;
+        DeliveryTime = deliveryTime;
+        this.price = price;
+        this.ipDepartment = ipDepartment;
+    }
 
     public Integer getIpDepartment() {
         return ipDepartment;
@@ -34,12 +60,12 @@ public class Product {
         this.nameProduct = nameProduct;
     }
 
-    public String getParentDepartment() {
-        return parentDepartment;
+    public String getParentDepartmentName() {
+        return parentDepartmentName;
     }
 
-    public void setParentDepartment(String parentDepartment) {
-        this.parentDepartment = parentDepartment;
+    public void setParentDepartmentName(String parentDepartmentName) {
+        this.parentDepartmentName = parentDepartmentName;
     }
 
     public LocalDate getDeliveryTime() {
@@ -50,11 +76,11 @@ public class Product {
         DeliveryTime = deliveryTime;
     }
 
-    public LocalDate getExpiration() {
-        return Expiration;
+    public Integer getPrice() {
+        return price;
     }
 
-    public void setExpiration(LocalDate expiration) {
-        Expiration = expiration;
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 }

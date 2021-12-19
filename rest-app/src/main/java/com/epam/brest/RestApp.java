@@ -13,7 +13,7 @@ import org.springframework.context.annotation.PropertySource;
 import java.util.Arrays;
 
 @SpringBootApplication
-@PropertySource({"classpath:sql-department.properties"})
+@PropertySource({"classpath:sql-dao.properties"})
 public class RestApp extends SpringBootServletInitializer {
     private static final Logger logger = LogManager.getLogger(RestApp.class);
 

@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DataJdbcTest
 @Import({DepartmentDtoDAOJDBC.class})
-@PropertySource({"classpath:sql-department.properties"})
+@PropertySource({"classpath:sql-dao.properties"})
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ContextConfiguration(classes = SpringJdbcConfig.class)
 @Transactional
