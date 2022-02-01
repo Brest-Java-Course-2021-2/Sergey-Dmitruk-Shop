@@ -23,8 +23,8 @@ private  DepartmentDtoDAO departmentDtoDAO;
 
 
     public List<DepartmentDTO> findAllDepartments() {
-        return
-departmentDtoDAO.retAllDepartments();
+
+        return departmentDtoDAO.retAllDepartments();
     }
 }
 

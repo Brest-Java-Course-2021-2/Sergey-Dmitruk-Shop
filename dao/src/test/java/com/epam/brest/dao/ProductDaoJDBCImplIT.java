@@ -21,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Locale;
 
 
 @DataJdbcTest
@@ -67,8 +66,8 @@ class ProductDaoJDBCImplIT {
         assertNotNull(productDaoJDBC);
         Integer sizeProductsBefore = productDaoJDBC.findAllProduct().size();
         assertNotNull(sizeProductsBefore);
-        Product product = new Product("TestNameProduct",department1.getNameDepartment(),date,300);
-        productDaoJDBC.createProduct(product);
+        Product product = new Product("TestNameProduct",department1.getNameDepartment(),date.toString(),300);
+       productDaoJDBC.createProduct(product);
         Integer sizeProductsAfter = productDaoJDBC.findAllProduct().size();
         assertEquals(sizeProductsBefore + 1, sizeProductsAfter);
 
@@ -109,7 +108,7 @@ class ProductDaoJDBCImplIT {
     void updateProduct(){
     logger.debug("updateProduct()");
     assertNotNull(productDaoJDBC);
-    String newName = RandomString.hashOf(20);
+    String newName = RandomString.hashOf(10);
     Product product = productDaoJDBC.getProductById(3);
         assertNotNull(product);
         product.setNameProduct(newName);
@@ -117,6 +116,7 @@ class ProductDaoJDBCImplIT {
     productDaoJDBC.updateProduct(product);
     Product updatedProduct = productDaoJDBC.getProductById(3);
     assertEquals(newName,updatedProduct.getNameProduct());
+    assertEquals(1,updatedProduct.getIpDepartment());
     }
     @Test
     void deleteProduct(){

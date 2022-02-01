@@ -10,20 +10,17 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
 public class DepartmentController {
+
     private final DepartmentService departmentService;
 
     private final DepartmentDTOService departmentDTOService;
 
-
-
     private final   DepartmentValidator validator;
-
-
-
 
 
     public DepartmentController(DepartmentDTOService departmentDTOService, DepartmentService departmentService, DepartmentValidator validator) {
@@ -35,7 +32,6 @@ public class DepartmentController {
     @GetMapping(value = "/departments")
     public String departments( Model model){
     model.addAttribute("departments", departmentDTOService.findAllDepartments());
-
     return "departments";
 }
 
@@ -74,8 +70,13 @@ return "department";
         return "redirect:/departments";
     }
     @GetMapping(value = "/department/{id}/delete")
-    public String deleteDepartment(@PathVariable Integer id){
-        departmentService.delete(id);
+    public String deleteDepartment(@PathVariable Integer id, RedirectAttributes redirectAttributes){
+       Integer result =  departmentService.delete(id);
+
+       if(result == 0){
+           redirectAttributes.addFlashAttribute("errorDelete",true);
+       }
+
         return "redirect:/departments";
     }
 

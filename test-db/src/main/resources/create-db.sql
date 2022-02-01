@@ -4,7 +4,7 @@ CREATE TABLE department(
   name_Department VARCHAR(30) NOT NULL UNIQUE,
 assortment INT,
 total_Cost INT,
-responsible VARCHAR(40),
+responsible VARCHAR(40) NOT NULL,
     PRIMARY KEY (id_Department)
 );
 CREATE TABLE product(

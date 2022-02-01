@@ -19,7 +19,8 @@ public class DepartmentDtoDAOJDBC implements DepartmentDtoDAO {
     public DepartmentDtoDAOJDBC(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
-    public List<DepartmentDTO> retAllDepartments(){
+
+    public List<DepartmentDTO> retAllDepartments() {
         List<DepartmentDTO> departments = namedParameterJdbcTemplate.query(returnAllDepartments,
                 BeanPropertyRowMapper.newInstance(DepartmentDTO.class));
         return departments;

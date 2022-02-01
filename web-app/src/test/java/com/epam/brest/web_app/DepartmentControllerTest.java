@@ -3,6 +3,7 @@ package com.epam.brest.web_app;
 import com.epam.brest.Department;
 import com.epam.brest.dto.DepartmentDTO;
 import com.epam.brest.service.DepartmentService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,6 +31,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 
 import static com.epam.brest.constants.DepartmentConstants.Department_Name_Size;
@@ -53,7 +55,7 @@ class DepartmentControllerIT {
 
     private final Logger logger = LogManager.getLogger(DepartmentControllerIT.class);
 
-    private final String URL_DEPARTMENTS_DTO = "http://localhost:8088/department-dto";
+    private final String URL_DEPARTMENTS_DTO = "http://localhost:8088/departments_dto";
     private final   String URL_DEPARTMENTS = "http://localhost:8088/departments";
 
     @Autowired
@@ -77,6 +79,7 @@ class DepartmentControllerIT {
 
     @Test
     void shouldReturnDepartmentsPage() throws Exception {
+
         DepartmentDTO department1 = createDto(1,"department1");
         DepartmentDTO department2 = createDto(2, "department2");
 
@@ -87,7 +90,7 @@ class DepartmentControllerIT {
                         .body(mapper.writeValueAsString(Arrays.asList(department1,department2)))
                 );
 
-
+        logger.debug("shouldReturnDepartmentsPage()");
         mockMvc.perform(
                         MockMvcRequestBuilders.get("/departments")
                 ).andDo(MockMvcResultHandlers.print())
@@ -120,7 +123,7 @@ class DepartmentControllerIT {
     }
     @Test
     void shouldAddDepartment() throws Exception {
-
+logger.debug("shouldAddDepartment()");
         mockServer.expect(ExpectedCount.once(), MockRestRequestMatchers.requestTo(new URI(URL_DEPARTMENTS)))
                 .andExpect(MockRestRequestMatchers.method(HttpMethod.POST))
                 .andRespond(MockRestResponseCreators.withStatus(HttpStatus.OK)
@@ -162,8 +165,35 @@ mockServer.verify();
 
     }
     @Test
-    void shouldFailDepartmentOnEmptyResponsible() throws Exception {
+    void shouldDeleteDepartmentWithProduct() throws Exception {
+        logger.debug("shouldDeleteDepartment()");
+        Integer id = 0;
 
+        mockServer.expect(ExpectedCount.once(), MockRestRequestMatchers.requestTo(new URI(URL_DEPARTMENTS+"/" +id)))
+                .andExpect(MockRestRequestMatchers.method(HttpMethod.DELETE))
+                .andRespond(MockRestResponseCreators.withStatus(HttpStatus.OK)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(mapper.writeValueAsString(id)));
+
+
+        mockMvc.perform(
+                        MockMvcRequestBuilders.get("/department/0/delete")
+                ).andExpect(status().isFound())
+
+                .andExpect(view().name("redirect:/departments"))
+                .andExpect(flash().attribute("errorDelete",true))
+                .andExpect(redirectedUrl("/departments"));
+
+    }
+
+
+
+
+
+
+    @Test
+    void shouldFailDepartmentOnEmptyResponsible() throws Exception {
+        logger.debug("shouldFailDepartmentOnEmptyResponsible()");
         Department department = new Department("Test","");
 
         mockMvc.perform(
@@ -212,7 +242,7 @@ mockServer.verify();
     }
     @Test
     public void shouldUpdateDepartment() throws Exception {
-
+        logger.debug("shouldUpdateDepartment()");
         String testName = RandomStringUtils.randomAlphabetic(Department_Name_Size);
         String testResponsible = RandomStringUtils.randomAlphabetic(Department_Responsible_Size);
 

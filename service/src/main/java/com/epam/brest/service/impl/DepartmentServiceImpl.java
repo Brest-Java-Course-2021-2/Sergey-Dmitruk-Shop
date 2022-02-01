@@ -3,9 +3,11 @@ package com.epam.brest.service.impl;
 import com.epam.brest.Department;
 import com.epam.brest.dao.DepartmentDao;
 import com.epam.brest.service.DepartmentService;
+import com.epam.brest.service.impl.exception.DepartmentNotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +15,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Service
+
 public class DepartmentServiceImpl implements DepartmentService {
 
     private static final Logger LOGGER = LogManager.getLogger(DepartmentServiceImpl.class);
@@ -53,7 +56,11 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public Department getDepartmentById(Integer idDepartment) {
         LOGGER.debug("Get department by id({})",idDepartment);
-        return this.departmentDao.getDepartmentById(idDepartment);
+        try {
+            return this.departmentDao.getDepartmentById(idDepartment);
+        }catch (EmptyResultDataAccessException ex){
+            throw new DepartmentNotFoundException(idDepartment);
+        }
     }
 
     @Override

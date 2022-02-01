@@ -1,16 +1,21 @@
 package com.epam.brest;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 
 public class Product {
     private Integer idProduct;
     private String nameProduct;
     private String parentDepartmentName;
-    private LocalDate DeliveryTime;
+    private String DeliveryTime;
     private Integer price;
     private Integer ipDepartment;
+private String getDate;
 
-    public Product(String nameProduct, String parentDepartmentName, LocalDate deliveryTime, Integer price) {
+
+
+    public Product(String nameProduct, String parentDepartmentName, String deliveryTime, Integer price) {
         this.nameProduct = nameProduct;
         this.parentDepartmentName = parentDepartmentName;
         DeliveryTime = deliveryTime;
@@ -27,7 +32,7 @@ public class Product {
 
     }
 
-    public Product(Integer idProduct, String nameProduct, String parentDepartmentName, LocalDate deliveryTime, Integer price, Integer ipDepartment) {
+    public Product(Integer idProduct, String nameProduct, String parentDepartmentName, String deliveryTime, Integer price, Integer ipDepartment) {
         this.idProduct = idProduct;
         this.nameProduct = nameProduct;
         this.parentDepartmentName = parentDepartmentName;
@@ -68,11 +73,11 @@ public class Product {
         this.parentDepartmentName = parentDepartmentName;
     }
 
-    public LocalDate getDeliveryTime() {
+    public String getDeliveryTime() {
         return DeliveryTime;
     }
 
-    public void setDeliveryTime(LocalDate deliveryTime) {
+    public void setDeliveryTime(String deliveryTime) {
         DeliveryTime = deliveryTime;
     }
 
@@ -83,4 +88,5 @@ public class Product {
     public void setPrice(Integer price) {
         this.price = price;
     }
+
 }

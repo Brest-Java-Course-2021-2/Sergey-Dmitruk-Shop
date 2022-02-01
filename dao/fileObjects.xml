@@ -5,36 +5,36 @@
 <void class="com.epam.brest.serializationDemo.RandomObject" id="Field0" method="getField">
  <string>data</string>
  <void id="doubleArray0" method="get">
-  <object idref="RandomObject1"/>
+  <object idref="RandomObject0"/>
   <void index="1">
-   <double>0.06388603139009608</double>
+   <double>0.11864023479370889</double>
   </void>
   <void index="2">
-   <double>0.5104834243590742</double>
+   <double>0.5776429297716761</double>
   </void>
   <void index="3">
-   <double>0.9962000656180897</double>
+   <double>0.679959997523686</double>
   </void>
   <void index="4">
-   <double>0.9025635427439415</double>
+   <double>0.25906490804889737</double>
   </void>
   <void index="5">
-   <double>0.4573835349026889</double>
+   <double>0.8722526759073458</double>
   </void>
   <void index="6">
-   <double>0.017014358191263068</double>
+   <double>0.7452004361334259</double>
   </void>
   <void index="7">
-   <double>0.484882323858116</double>
+   <double>0.23752129696784496</double>
   </void>
   <void index="8">
-   <double>0.46472373708638237</double>
+   <double>0.4816587505122698</double>
   </void>
   <void index="9">
-   <double>0.0504063389413798</double>
+   <double>0.9616753009738028</double>
   </void>
   <void index="0">
-   <double>0.39757555427714286</double>
+   <double>0.9637817873704622</double>
   </void>
  </void>
 </void>
@@ -42,36 +42,36 @@
 <void class="com.epam.brest.serializationDemo.RandomObject" id="Field1" method="getField">
  <string>data</string>
  <void id="doubleArray1" method="get">
-  <object idref="RandomObject0"/>
+  <object idref="RandomObject1"/>
   <void index="1">
-   <double>0.09858070173210287</double>
+   <double>0.7900071491152277</double>
   </void>
   <void index="2">
-   <double>0.06354863780439324</double>
+   <double>0.6019516159554833</double>
   </void>
   <void index="3">
-   <double>0.4013325773033828</double>
+   <double>0.9564979631671638</double>
   </void>
   <void index="4">
-   <double>0.12563290211470823</double>
+   <double>0.4337176380155572</double>
   </void>
   <void index="5">
-   <double>0.08933833313121953</double>
+   <double>0.35182752999562816</double>
   </void>
   <void index="6">
-   <double>0.10031002583070536</double>
+   <double>0.003966530193652451</double>
   </void>
   <void index="7">
-   <double>0.2691293918954173</double>
+   <double>0.6672213935724857</double>
   </void>
   <void index="8">
-   <double>0.481612572072157</double>
+   <double>0.8432305920021556</double>
   </void>
   <void index="9">
-   <double>0.9203644118551416</double>
+   <double>0.040684561109332495</double>
   </void>
   <void index="0">
-   <double>0.7533476851882717</double>
+   <double>0.37885360069538165</double>
   </void>
  </void>
 </void>

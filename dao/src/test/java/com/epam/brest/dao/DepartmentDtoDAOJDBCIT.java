@@ -33,6 +33,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class DepartmentDtoDAOJDBCIT {
 
     private DepartmentDtoDAOJDBC departmentDtoDAOJDBC;
+
+
     @Autowired
     DepartmentDtoDAOJDBCIT(DepartmentDtoDAO departmentDtoDAO){
         this.departmentDtoDAOJDBC = (DepartmentDtoDAOJDBC) departmentDtoDAO;

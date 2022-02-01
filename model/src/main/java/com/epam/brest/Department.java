@@ -3,7 +3,6 @@ package com.epam.brest;
 public class Department {
 private Integer idDepartment;
 private String nameDepartment;
-
 private String responsible;
 
 public Department(Integer idDepartment){

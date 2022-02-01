@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Objects;
 
 
 @Component
@@ -26,49 +27,60 @@ public class ProductDaoJDBCImpl implements ProductDao{
 
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public ProductDaoJDBCImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate){
+    public ProductDaoJDBCImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
     @Value("${SQL_Select_All_Product}")
-    private  String sqlGetAllProduct;
+    private String sqlGetAllProduct;
     @Value("${SQL_Check_Unique_name_Product}")
-    private  String sqlUniqueNameProduct;
+    private String sqlUniqueNameProduct;
     @Value("${SQL_Select_IDDepartmentByName_And_Check_Parent_Department_Exist}")
-    private  String sqlParentDepartmentIsExist;
+    private String sqlParentDepartmentIsExist;
     @Value("${SQL_Create_Product}")
-    private  String sqlCreateProduct;
+    private String sqlCreateProduct;
     @Value("${SQL_Select_Product_By_Id}")
-    private  String sqlGetProductById;
+    private String sqlGetProductById;
     @Value("${SQL_Update_Product}")
-    private  String sqlUpdateProduct;
+    private String sqlUpdateProduct;
     @Value("${SQL_Delete_Product}")
-    private  String sqlDeleteProduct;
+    private String sqlDeleteProduct;
 
+    @Value("${SQL_Select_Department_By_Id}")
+    private String sqlDepartmentById;
 
 //Basic working methods with Products
+
+
+    @Value("${SQL_Sorted_Products_By_Date}")
+    private String sqlSortedProducts;
 
 
     @Override
     public List<Product> findAllProduct() {
         LOGGER.debug("findAllProduct()");
-     return    namedParameterJdbcTemplate.query(sqlGetAllProduct, new ProductRowMapper());
+        return namedParameterJdbcTemplate.query(sqlGetAllProduct, new ProductRowMapper());
     }
 
     @Override
     public Integer createProduct(Product product) {
-        LOGGER.debug("createProduct({})",product);
-        if(!productIsUnique(product.getNameProduct())||product.getParentDepartmentName() == null){
-            LOGGER.warn("Product with this name already exists",product.getNameProduct());
-         throw new IllegalArgumentException("Name product isn't unique");}
-        if(returnIdParentDepartmentAndCheckDepartmentIsExist(product.getParentDepartmentName()) == null){
+
+        LOGGER.debug("createProduct({})", product);
+
+        if (!productIsUnique(product.getNameProduct()) || product.getParentDepartmentName() == null) {
+            LOGGER.warn("Product with this name already exists", product.getNameProduct());
+            throw new IllegalArgumentException("Name product isn't unique");
+        }
+
+        if (returnIdParentDepartmentAndCheckDepartmentIsExist(product.getParentDepartmentName()) == null) {
             LOGGER.warn("Department with this name not exists");
-            throw new IllegalArgumentException("Name parent department not found");}
+            throw new IllegalArgumentException("Name parent department not found");
+        }
 
         KeyHolder retKeyProd = new GeneratedKeyHolder();
-        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("name_Product",product.getNameProduct())
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("name_Product", product.getNameProduct())
                 .addValue("parent_Department_Name", product.getParentDepartmentName())
-                .addValue("delivery_Date",product.getDeliveryTime())
+                .addValue("delivery_Date", product.getDeliveryTime())
                 .addValue("price", product.getPrice())
                 .addValue("id_Department", returnIdParentDepartmentAndCheckDepartmentIsExist(product.getParentDepartmentName()));
 
@@ -76,21 +88,19 @@ public class ProductDaoJDBCImpl implements ProductDao{
         return (Integer) retKeyProd.getKey();
 
 
-
-
-
     }
-    private Boolean productIsUnique(String nameProduct){
-        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("name_Product",nameProduct);
-        return namedParameterJdbcTemplate.queryForObject(sqlUniqueNameProduct,sqlParameterSource,Integer.class) == 0;
+
+    private Boolean productIsUnique(String nameProduct) {
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("name_Product", nameProduct);
+        return namedParameterJdbcTemplate.queryForObject(sqlUniqueNameProduct, sqlParameterSource, Integer.class) == 0;
     }
 
     //This method check exist parent department and returned his id
-    private Integer returnIdParentDepartmentAndCheckDepartmentIsExist(String nameDepartment){
+    private Integer returnIdParentDepartmentAndCheckDepartmentIsExist(String nameDepartment) {
         try {
-            SqlParameterSource sqlParameterSource = new MapSqlParameterSource("name_Department",nameDepartment);
-            return namedParameterJdbcTemplate.queryForObject(sqlParentDepartmentIsExist,sqlParameterSource,Integer.class).intValue();
-        }catch (DataAccessException e){
+            SqlParameterSource sqlParameterSource = new MapSqlParameterSource("name_Department", nameDepartment);
+            return namedParameterJdbcTemplate.queryForObject(sqlParentDepartmentIsExist, sqlParameterSource, Integer.class).intValue();
+        } catch (DataAccessException e) {
             return null;
         }
 
@@ -98,43 +108,45 @@ public class ProductDaoJDBCImpl implements ProductDao{
 
     @Override
     public Integer updateProduct(Product product) {
-        LOGGER.debug("updateProduct({})",product);
-        if(returnIdParentDepartmentAndCheckDepartmentIsExist(product.getParentDepartmentName()) == null){
+        LOGGER.debug("updateProduct({})", product);
+        if (returnIdParentDepartmentAndCheckDepartmentIsExist(product.getParentDepartmentName()) == null) {
             LOGGER.warn("Department with this name not exists");
-            throw new IllegalArgumentException("Name parent department not found");}
-        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("name_Product",product.getNameProduct())
+            throw new IllegalArgumentException("Name parent department not found");
+        }
+        if (!productIsUnique(product.getNameProduct())
+                & !Objects.equals(getProductById(product.getIdProduct()).getNameProduct(), product.getNameProduct())) {
+            LOGGER.warn("Product is exist", product.getNameProduct());
+            throw new IllegalArgumentException("Product is exist");
+        }
+
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("name_Product", product.getNameProduct())
                 .addValue("id_Product", product.getIdProduct())
                 .addValue("parent_Department_Name", product.getParentDepartmentName())
-                .addValue("delivery_Date",product.getDeliveryTime())
+                .addValue("delivery_Date", product.getDeliveryTime())
                 .addValue("price", product.getPrice())
                 .addValue("id_Department", returnIdParentDepartmentAndCheckDepartmentIsExist(product.getParentDepartmentName()));
-        return namedParameterJdbcTemplate.update(sqlUpdateProduct,sqlParameterSource);
+        return namedParameterJdbcTemplate.update(sqlUpdateProduct, sqlParameterSource);
     }
 
     @Override
     public Integer deleteProduct(Integer idProduct) {
-       LOGGER.debug("deleteProduct({})",idProduct);
-        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("id_Product",idProduct);
-        return namedParameterJdbcTemplate.update(sqlDeleteProduct,sqlParameterSource);
+        LOGGER.debug("deleteProduct({})", idProduct);
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("id_Product", idProduct);
+        return namedParameterJdbcTemplate.update(sqlDeleteProduct, sqlParameterSource);
 
 
     }
 
     @Override
     public Product getProductById(Integer id) {
-        LOGGER.debug(" getProductById({})",id);
-        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("id_Product",id);
-        return namedParameterJdbcTemplate.queryForObject(sqlGetProductById,sqlParameterSource,new ProductRowMapper());
+        LOGGER.debug(" getProductById({})", id);
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("id_Product", id);
+        return namedParameterJdbcTemplate.queryForObject(sqlGetProductById, sqlParameterSource, new ProductRowMapper());
 
     }
 
-    @Override
-    public Department getIdDepartmentByName(String nameDepartment) {
-        return null;
-    }
 
-
-    class ProductRowMapper implements RowMapper<Product>{
+    class ProductRowMapper implements RowMapper<Product> {
 
         @Override
         public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -142,11 +154,14 @@ public class ProductDaoJDBCImpl implements ProductDao{
             product.setIdProduct(rs.getInt("id_Product"));
             product.setNameProduct(rs.getString("name_Product"));
             product.setParentDepartmentName(rs.getString("parent_Department_Name"));
-            product.setDeliveryTime(rs.getDate("delivery_Date").toLocalDate());
+            product.setDeliveryTime(rs.getString("delivery_Date"));
             product.setPrice(rs.getInt("price"));
             product.setIpDepartment(rs.getInt("id_Department"));
+
             return product;
         }
     }
 
-}
+    }
+
+

@@ -55,7 +55,7 @@ void delete(){
         assertNotNull(departmentService);
         int departmentSize = departmentService.count();
         assertNotNull(departmentSize);
-        Department department = new Department("Test");
+        Department department = new Department("Test","ResponsibleTest");
         Integer departmentId =
                 departmentService.create(department);
         assertNotNull(departmentId);

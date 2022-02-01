@@ -18,6 +18,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -99,6 +100,7 @@ class DepartmentControllerIT {
                 ).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+
                 .andExpect(content().string("1"));
 
 
@@ -107,7 +109,9 @@ class DepartmentControllerIT {
 
     @Test
     void shouldUpdateDepartment() throws Exception{
-String department  = mockMvc.perform(get("/departments/{id}",2)).toString();
+Department department = new Department("test","test");
+department.setIdDepartment(1);
+
         mockMvc.perform(
                 put("/departments")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -120,7 +124,7 @@ String department  = mockMvc.perform(get("/departments/{id}",2)).toString();
 
     @Test
     void shouldCreateDepartment() throws Exception{
-        Department department = new Department("test");
+        Department department = new Department("test","Test");
 
         String request=
         mapper.writeValueAsString(department);

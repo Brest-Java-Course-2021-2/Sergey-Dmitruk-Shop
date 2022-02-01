@@ -33,6 +33,7 @@ class DepartmentDaoJDBCImplIT {
 
 
 
+
     @Autowired
     public DepartmentDaoJDBCImplIT(DepartmentDao departmentDao) {
         this.departmentDaoJDBCImp = (DepartmentDaoJDBCImp) departmentDao;

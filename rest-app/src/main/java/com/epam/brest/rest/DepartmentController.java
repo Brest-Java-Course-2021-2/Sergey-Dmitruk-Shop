@@ -53,15 +53,15 @@ Logger logger =  LogManager.getLogger(DepartmentController.class);
     @PutMapping(value = "/departments", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = MediaType.APPLICATION_JSON_VALUE )
     public ResponseEntity<Integer> updateDepartment(@RequestBody Department department) {
         logger.debug("updateDepartment({})", department);
-        int result = departmentService.update(department);
-        return new ResponseEntity(result, HttpStatus.OK);
+        int amount = departmentService.update(department);
+        return new ResponseEntity(amount, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/departments/{id}", produces = {"application/json"})
     public ResponseEntity<Integer> deleteDepartment(@PathVariable Integer id) {
 
-        int result = departmentService.delete(id);
-        return new ResponseEntity(result, HttpStatus.OK);
+        int amount = departmentService.delete(id);
+        return new ResponseEntity(amount, HttpStatus.OK);
     }
     }
 

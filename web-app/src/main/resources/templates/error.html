@@ -17,7 +17,7 @@
 <header>
     <nav class="navbar navbar-expand-sm navbar-light bg-info">
         <div class="container-fluid">
-            <img src="../static/picture.jpg" height="40" width="40" class="img-fluid">
+            <img src="../static/picture.jpg" th:src="@{/picture.jpg}" height="40" width="40" class="img-fluid">
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
                     aria-expanded="false">
@@ -42,7 +42,7 @@
     </nav>
     <nav id="main-header" class="py-1 mb-3 navbar navbar-light bg-light text-dark">
 
-        <span class="navbar-brand" >An error occured</span>
+        <span class="navbar-brand"  th:text="${exception}">An error occured</span>
     </nav>
 </header>
 

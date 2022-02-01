@@ -11,6 +11,7 @@ public interface ProductDao {
     Integer updateProduct(Product product);
     Integer deleteProduct(Integer idProduct);
     Product getProductById(Integer id);
-    Department getIdDepartmentByName(String nameDepartment);
+
+
 
 }

@@ -3,14 +3,17 @@ package com.epam.brest.config;
 
 import com.epam.brest.restservice.DepartmentDtoRestService;
 import com.epam.brest.restservice.DepartmentRestService;
+import com.epam.brest.restservice.ProductDtoRestService;
+import com.epam.brest.restservice.ProductRestService;
 import com.epam.brest.service.DepartmentDTOService;
 import com.epam.brest.service.DepartmentService;
+import com.epam.brest.service.ProductDTOService;
+import com.epam.brest.service.ProductService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 @ComponentScan
@@ -24,9 +27,22 @@ public class WebAppConfig {
     @Value("${rest.server.port}")
     private Integer port;
 
+
     @Bean
     RestTemplate restTemplate() {
         return new RestTemplate(new SimpleClientHttpRequestFactory());
+    }
+
+    @Bean
+    ProductDTOService productDTOService(){
+        String url = String.format("%s://%s:%d/products_sort",protocol,host,port);
+        return new ProductDtoRestService(url,restTemplate());
+    }
+
+    @Bean
+    ProductService productService(){
+        String url = String.format("%s://%s:%d/products",protocol,host,port);
+        return new ProductRestService(url,restTemplate());
     }
 
     @Bean
