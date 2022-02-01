@@ -14,14 +14,12 @@ import java.util.List;
 @Service
 public class ProductRestService implements ProductService {
 
+    private final Logger logger = LogManager.getLogger(ProductRestService.class);
+    private String url;
+    private RestTemplate restTemplate;
+
     public ProductRestService() {
     }
-
-    private final Logger logger = LogManager.getLogger(ProductRestService.class);
-
-    private String url;
-
-    private RestTemplate restTemplate;
 
     public ProductRestService(String url, RestTemplate restTemplate) {
         this.url = url;
@@ -30,17 +28,16 @@ public class ProductRestService implements ProductService {
 
     public List<Product> findAllProduct() {
         logger.debug("findAllProduct()");
-        ResponseEntity responseEntity = restTemplate.getForEntity(url,List.class);
+        ResponseEntity responseEntity = restTemplate.getForEntity(url, List.class);
         return (List<Product>) responseEntity.getBody();
     }
-
 
 
     @Override
     public Integer createProduct(Product product) {
         logger.debug("createProduct({})", product);
 
-        ResponseEntity responseEntity = restTemplate.postForEntity(url,product,Integer.class);
+        ResponseEntity responseEntity = restTemplate.postForEntity(url, product, Integer.class);
         return (Integer) responseEntity.getBody();
     }
 
@@ -49,7 +46,7 @@ public class ProductRestService implements ProductService {
         logger.debug("updateProduct({})", product);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        HttpEntity<Product> entity = new HttpEntity<>(product,httpHeaders);
+        HttpEntity<Product> entity = new HttpEntity<>(product, httpHeaders);
         ResponseEntity<Integer> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, entity, Integer.class);
         return responseEntity.getBody();
     }
@@ -59,14 +56,14 @@ public class ProductRestService implements ProductService {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<Product> entity = new HttpEntity<>(httpHeaders);
-        ResponseEntity<Integer> responseEntity = restTemplate.exchange(url +"/" + idProduct, HttpMethod.DELETE, entity, Integer.class);
+        ResponseEntity<Integer> responseEntity = restTemplate.exchange(url + "/" + idProduct, HttpMethod.DELETE, entity, Integer.class);
         return responseEntity.getBody();
     }
 
     @Override
     public Product getProductById(Integer id) {
-        logger.debug("getProductById({})",id);
-        ResponseEntity responseEntity = restTemplate.getForEntity(url+ "/" +id, Product.class);
+        logger.debug("getProductById({})", id);
+        ResponseEntity responseEntity = restTemplate.getForEntity(url + "/" + id, Product.class);
         return (Product) responseEntity.getBody();
     }
 

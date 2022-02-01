@@ -25,7 +25,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class DepartmentControllerTest {
 
 
-
     @InjectMocks
     private DepartmentController controller;
     @Mock
@@ -43,20 +42,19 @@ public class DepartmentControllerTest {
     @BeforeEach
     public void setup() {
         mockMvc = MockMvcBuilders.standaloneSetup(controller)
-                .setControllerAdvice( new CustomExceptionHandler())
+                .setControllerAdvice(new CustomExceptionHandler())
                 .build();
     }
 
 
-
     @Test
-    public void getDepartmentById() throws Exception{
+    public void getDepartmentById() throws Exception {
         Department department = new Department();
         department.setNameDepartment("Test");
         department.setIdDepartment(2);
         Mockito.when(departmentService.getDepartmentById(anyInt())).thenReturn(department);
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/departments/2"))
+                        .get("/departments/2"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
@@ -65,19 +63,20 @@ public class DepartmentControllerTest {
 
         Mockito.verify(departmentService).getDepartmentById(captorIntID.capture());
 
-        Assertions.assertEquals(captorIntID.getValue(),2);
+        Assertions.assertEquals(captorIntID.getValue(), 2);
 
 
     }
+
     @Test
     public void getDepartmentByIDException() throws Exception {
-    Mockito.when(departmentService.getDepartmentById(anyInt())).thenThrow(new IllegalArgumentException("message"));
+        Mockito.when(departmentService.getDepartmentById(anyInt())).thenThrow(new IllegalArgumentException("message"));
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/departments/2"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isUnprocessableEntity())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-               .andExpect(MockMvcResultMatchers.content().string("{\"message\":\"validation_error\",\"details\":[\"message\"]}"));
+                .andExpect(MockMvcResultMatchers.content().string("{\"message\":\"validation_error\",\"details\":[\"message\"]}"));
 
     }
 

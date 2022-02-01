@@ -4,12 +4,14 @@ import com.epam.brest.dto.ProductDto;
 import com.epam.brest.service.ProductDTOService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.http.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class ProductDtoRestService implements ProductDTOService {
@@ -29,21 +31,20 @@ public class ProductDtoRestService implements ProductDTOService {
     }
 
 
-
     @Override
     public List<ProductDto> sortedProductsByDate(LocalDate from, LocalDate to) {
-        logger.debug("sortedProductsByDate({}{})",from,to);
+        logger.debug("sortedProductsByDate({}{})", from, to);
 
-        String URI = url+ "?" +  "from={from}" +"&" +"to={to}";
+        String URI = url + "?" + "from={from}" + "&" + "to={to}";
 
-Map<String, String> uriParam = new HashMap<>();
-        uriParam.put("from",from.toString());
-        uriParam.put("to",to.toString());
+        Map<String, String> uriParam = new HashMap<>();
+        uriParam.put("from", from.toString());
+        uriParam.put("to", to.toString());
 
 
-        ResponseEntity responseEntity = restTemplate.getForEntity(URI, List.class,uriParam);
+        ResponseEntity responseEntity = restTemplate.getForEntity(URI, List.class, uriParam);
 
-        return  (List<ProductDto>) responseEntity.getBody();
+        return (List<ProductDto>) responseEntity.getBody();
     }
 
 }

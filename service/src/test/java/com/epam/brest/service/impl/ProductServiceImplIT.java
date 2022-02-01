@@ -4,8 +4,6 @@ package com.epam.brest.service.impl;
 import com.epam.brest.Product;
 import com.epam.brest.service.ProductService;
 import com.epam.brest.service.config.ServiceTestConfiguration;
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
@@ -19,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
 
 
 @ExtendWith(SpringExtension.class)
@@ -33,11 +32,10 @@ public class ProductServiceImplIT {
     ProductService productService;
 
 
-
     @Test
     void findAllProduct() {
         logger.debug("findAllProduct()");
-      assertNotNull(productService);
+        assertNotNull(productService);
         List<Product> products = productService.findAllProduct();
         assertNotNull(products);
         assertTrue(products.size() > 0);
@@ -48,15 +46,15 @@ public class ProductServiceImplIT {
         logger.debug("createProduct()");
         assertNotNull(productService);
         List<Product> products = productService.findAllProduct();
-        LocalDate date = LocalDate.of(2021,1,1);
+        LocalDate date = LocalDate.of(2021, 1, 1);
 
         assertNotNull(products);
         Integer sizeBefore =
-        products.size();
-        Product product = new Product("Test","Dairy",date.toString(),100);
+                products.size();
+        Product product = new Product("Test", "Dairy", date.toString(), 100);
         productService.createProduct(product);
-Integer sizeAfter = productService.findAllProduct().size();
-assertEquals(sizeBefore + 1, sizeAfter);
+        Integer sizeAfter = productService.findAllProduct().size();
+        assertEquals(sizeBefore + 1, sizeAfter);
     }
 
     @Test
@@ -64,13 +62,13 @@ assertEquals(sizeBefore + 1, sizeAfter);
         logger.debug("updateProduct()");
         assertNotNull(productService);
         Product product = productService.getProductById(1);
-        String  newName  = "NewTestName";
+        String newName = "NewTestName";
         String newDepName = "Butcher";
         product.setNameProduct(newName);
         product.setParentDepartmentName(newDepName);
         productService.updateProduct(product);
-        assertEquals(newName,product.getNameProduct());
-        assertEquals(newDepName,product.getParentDepartmentName());
+        assertEquals(newName, product.getNameProduct());
+        assertEquals(newDepName, product.getParentDepartmentName());
     }
 
     @Test
@@ -95,6 +93,6 @@ assertEquals(sizeBefore + 1, sizeAfter);
         Integer id = 1;
         Product product = productService.getProductById(id);
         assertNotNull(product);
-        assertEquals(id,product.getIdProduct());
+        assertEquals(id, product.getIdProduct());
     }
 }

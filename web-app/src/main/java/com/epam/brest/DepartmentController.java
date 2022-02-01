@@ -20,20 +20,20 @@ public class DepartmentController {
 
     private final DepartmentDTOService departmentDTOService;
 
-    private final   DepartmentValidator validator;
+    private final DepartmentValidator validator;
 
 
     public DepartmentController(DepartmentDTOService departmentDTOService, DepartmentService departmentService, DepartmentValidator validator) {
         this.departmentDTOService = departmentDTOService;
-        this.departmentService=departmentService;
+        this.departmentService = departmentService;
         this.validator = validator;
     }
 
     @GetMapping(value = "/departments")
-    public String departments( Model model){
-    model.addAttribute("departments", departmentDTOService.findAllDepartments());
-    return "departments";
-}
+    public String departments(Model model) {
+        model.addAttribute("departments", departmentDTOService.findAllDepartments());
+        return "departments";
+    }
 
     @GetMapping(value = "/department")
     public final String gotoAddDepartmentPage(Model model) {
@@ -41,45 +41,48 @@ public class DepartmentController {
         model.addAttribute("department", new Department());
         return "department";
     }
+
     @PostMapping(value = "/department")
     public String addDepartment(Department department, BindingResult bindingResult) {
 
-        validator.validate(department,bindingResult);
+        validator.validate(department, bindingResult);
 
-       if(bindingResult.hasErrors())
+        if (bindingResult.hasErrors())
             return "department";
 
         this.departmentService.create(department);
         return "redirect:/departments";
     }
+
     @GetMapping(value = "/department/{id}")
-    public String editDepartment(@PathVariable Integer id, Model model){
+    public String editDepartment(@PathVariable Integer id, Model model) {
         model.addAttribute("isNew", false);
         model.addAttribute("department", departmentService.getDepartmentById(id));
-return "department";
+        return "department";
     }
+
     @PostMapping(value = "/department/{id}")
-    public String updateDepartment(Department department,  BindingResult bindingResult){
+    public String updateDepartment(Department department, BindingResult bindingResult) {
 
-        validator.validate(department,bindingResult);
+        validator.validate(department, bindingResult);
 
-        if(bindingResult.hasErrors())
+        if (bindingResult.hasErrors())
             return "department";
 
         this.departmentService.update(department);
         return "redirect:/departments";
     }
-    @GetMapping(value = "/department/{id}/delete")
-    public String deleteDepartment(@PathVariable Integer id, RedirectAttributes redirectAttributes){
-       Integer result =  departmentService.delete(id);
 
-       if(result == 0){
-           redirectAttributes.addFlashAttribute("errorDelete",true);
-       }
+    @GetMapping(value = "/department/{id}/delete")
+    public String deleteDepartment(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
+        Integer result = departmentService.delete(id);
+
+        if (result == 0) {
+            redirectAttributes.addFlashAttribute("errorDelete", true);
+        }
 
         return "redirect:/departments";
     }
-
 
 
 }

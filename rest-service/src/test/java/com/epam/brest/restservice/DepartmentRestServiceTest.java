@@ -31,12 +31,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = {"classpath:app-context_test.xml"})
 class DepartmentRestServiceTest {
- Logger logger = LogManager.getLogger(DepartmentRestServiceTest.class);
-
- private String URL = "http://localhost:8088/departments";
+    Logger logger = LogManager.getLogger(DepartmentRestServiceTest.class);
     @Autowired
     RestTemplate restTemplate;
-
+    private String URL = "http://localhost:8088/departments";
     private MockRestServiceServer mockServer;
 
     private ObjectMapper mapper = new ObjectMapper();
@@ -46,7 +44,7 @@ class DepartmentRestServiceTest {
     @BeforeEach
     void setUp() {
         mockServer = MockRestServiceServer.createServer(restTemplate);
-        departmentRestService = new DepartmentRestService(URL,restTemplate);
+        departmentRestService = new DepartmentRestService(URL, restTemplate);
 
     }
 
@@ -60,7 +58,7 @@ class DepartmentRestServiceTest {
 
         Integer idCreateDepartment = 7;
         Department departmentCreated =
-        create(idCreateDepartment);
+                create(idCreateDepartment);
 
         mockServer.expect(ExpectedCount.once(), MockRestRequestMatchers.requestTo(new URI(URL)))
                 .andExpect(MockRestRequestMatchers.method(HttpMethod.POST))
@@ -72,7 +70,7 @@ class DepartmentRestServiceTest {
 
         mockServer.verify();
         assertNotNull(idResult);
-        assertEquals(idCreateDepartment,idResult);
+        assertEquals(idCreateDepartment, idResult);
 
     }
 
@@ -81,7 +79,7 @@ class DepartmentRestServiceTest {
         logger.debug("shouldReturnCount()");
         Integer countDepartments = 3;
 
-        mockServer.expect(ExpectedCount.once(), MockRestRequestMatchers.requestTo(new URI(URL+"/"+"count")))
+        mockServer.expect(ExpectedCount.once(), MockRestRequestMatchers.requestTo(new URI(URL + "/" + "count")))
                 .andExpect(MockRestRequestMatchers.method(HttpMethod.GET))
                 .andRespond(MockRestResponseCreators.withStatus(HttpStatus.OK)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -91,7 +89,7 @@ class DepartmentRestServiceTest {
 
         mockServer.verify();
         assertNotNull(count);
-        assertEquals(count,countDepartments);
+        assertEquals(count, countDepartments);
 
 
     }
@@ -103,18 +101,17 @@ class DepartmentRestServiceTest {
         Department department = create(id);
         mockServer.expect(ExpectedCount.once(), MockRestRequestMatchers.requestTo(new URI(URL)))
                 .andExpect(MockRestRequestMatchers.method(HttpMethod.PUT))
-                        .andRespond(MockRestResponseCreators.withStatus(HttpStatus.OK)
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .body(mapper.writeValueAsString("6")));
+                .andRespond(MockRestResponseCreators.withStatus(HttpStatus.OK)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(mapper.writeValueAsString("6")));
 
 
-
-        Integer updateId =departmentRestService.update(department);
+        Integer updateId = departmentRestService.update(department);
 
 
         mockServer.verify();
         assertNotNull(updateId);
-        assertEquals(id,updateId);
+        assertEquals(id, updateId);
 
 
     }
@@ -124,7 +121,7 @@ class DepartmentRestServiceTest {
         logger.debug("shouldDelete()");
         Integer id = 3;
 
-        mockServer.expect(ExpectedCount.once(), MockRestRequestMatchers.requestTo(new URI(URL+"/" +id)))
+        mockServer.expect(ExpectedCount.once(), MockRestRequestMatchers.requestTo(new URI(URL + "/" + id)))
                 .andExpect(MockRestRequestMatchers.method(HttpMethod.DELETE))
                 .andRespond(MockRestResponseCreators.withStatus(HttpStatus.OK)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -144,10 +141,10 @@ class DepartmentRestServiceTest {
         logger.debug("shouldGetDepartmentById()");
         Integer id = 10;
         Department department =
-        create(id);
+                create(id);
 
 
-        mockServer.expect(ExpectedCount.once(), MockRestRequestMatchers.requestTo(new URI(URL+"/" + id)))
+        mockServer.expect(ExpectedCount.once(), MockRestRequestMatchers.requestTo(new URI(URL + "/" + id)))
                 .andExpect(MockRestRequestMatchers.method(HttpMethod.GET))
                 .andRespond(MockRestResponseCreators.withStatus(HttpStatus.OK)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -158,11 +155,10 @@ class DepartmentRestServiceTest {
         Department resultDepartment = departmentRestService.getDepartmentById(id);
 
 
-
         mockServer.verify();
         assertNotNull(resultDepartment);
-        assertEquals(resultDepartment.getIdDepartment(),id);
-        assertEquals(resultDepartment.getNameDepartment(),department.getNameDepartment());
+        assertEquals(resultDepartment.getIdDepartment(), id);
+        assertEquals(resultDepartment.getNameDepartment(), department.getNameDepartment());
 
     }
 
@@ -185,7 +181,8 @@ class DepartmentRestServiceTest {
         assertNotNull(departments);
         assertTrue(departments.size() > 0);
     }
-    private Department create(int id){
+
+    private Department create(int id) {
         Department department = new Department();
         department.setIdDepartment(id);
         department.setNameDepartment("Test" + " id" + id);

@@ -25,16 +25,17 @@ public class DepartmentRestService implements DepartmentService {
         this.url = url;
         this.restTemplate = restTemplate;
     }
-public DepartmentRestService(){
 
-}
+    public DepartmentRestService() {
+
+    }
 
 
     @Override
     public Integer create(Department department) {
         logger.debug("create({})", department);
 
-        ResponseEntity responseEntity = restTemplate.postForEntity(url,department,Integer.class);
+        ResponseEntity responseEntity = restTemplate.postForEntity(url, department, Integer.class);
         return (Integer) responseEntity.getBody();
 
     }
@@ -42,41 +43,41 @@ public DepartmentRestService(){
     @Override
     public Integer count() {
         logger.debug("count()");
-        ResponseEntity responseEntity = restTemplate.getForEntity(url+"/"+"count",Integer.class);
-        return(Integer) responseEntity.getBody();
+        ResponseEntity responseEntity = restTemplate.getForEntity(url + "/" + "count", Integer.class);
+        return (Integer) responseEntity.getBody();
     }
 
     @Override
     public Integer update(Department department) {
-        logger.debug("update({})",department);
+        logger.debug("update({})", department);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        HttpEntity<Department> entity = new HttpEntity<Department>(department,httpHeaders);
+        HttpEntity<Department> entity = new HttpEntity<Department>(department, httpHeaders);
         ResponseEntity<Integer> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, entity, Integer.class);
         return responseEntity.getBody();
     }
 
     @Override
     public Integer delete(Integer idDepartment) {
-        logger.debug("delete({})",idDepartment);
+        logger.debug("delete({})", idDepartment);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<Department> entity = new HttpEntity<>(httpHeaders);
-        ResponseEntity<Integer> responseEntity = restTemplate.exchange(url +"/" + idDepartment, HttpMethod.DELETE, entity, Integer.class);
+        ResponseEntity<Integer> responseEntity = restTemplate.exchange(url + "/" + idDepartment, HttpMethod.DELETE, entity, Integer.class);
         return responseEntity.getBody();
     }
 
     @Override
     public Department getDepartmentById(Integer idDepartment) {
-        logger.debug("getDepartmentById({})",idDepartment);
-        ResponseEntity responseEntity = restTemplate.getForEntity(url +"/" + idDepartment,Department.class);
+        logger.debug("getDepartmentById({})", idDepartment);
+        ResponseEntity responseEntity = restTemplate.getForEntity(url + "/" + idDepartment, Department.class);
         return (Department) responseEntity.getBody();
     }
 
     @Override
     public List<Department> departmentsFindAll() {
         logger.debug("findAllDepartments()");
-        ResponseEntity responseEntity = restTemplate.getForEntity(url,List.class);
+        ResponseEntity responseEntity = restTemplate.getForEntity(url, List.class);
         return (List<Department>) responseEntity.getBody();
     }
 }

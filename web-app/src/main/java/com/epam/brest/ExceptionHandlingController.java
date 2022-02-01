@@ -18,7 +18,6 @@ public class ExceptionHandlingController {
 
         ModelAndView mav = new ModelAndView();
         mav.addObject("exception", ex.getLocalizedMessage());
- //      mav.addObject("url", req.getRequestURL());
         mav.setViewName("error");
         return mav;
     }

@@ -1,6 +1,6 @@
-##Structure
+## Structure
 
-###Modules:
+### Modules:
 * dao-api
 * service-api
 * dao(create CRUD on level access to DB)
@@ -10,11 +10,16 @@
 * web-app
 * test-db(Connection to DB H2)
 * model(Department, Product)
+
 ___
 CURL:
-###Departments
-####1. Return all departments
+
+### Departments
+
+#### 1. Return all departments
+
 --request GET 'http://localhost:8088/departments_dto'
+
 * Status 200, Response
    ```
      [{
@@ -40,7 +45,7 @@ CURL:
    }]
    ```
 
-####2. Get department by ID
+#### 2. Get department by ID
 --request GET 'http://localhost:8088/departments/1'
    * Status 200, Response
    ```
@@ -59,9 +64,8 @@ CURL:
     ]
    }
    ```
-      
-      
-####3. Create department
+
+#### 3. Create department
    
 --request POST 'http://localhost:8088/departments' \
 --header 'Content-Type: application/json' \
@@ -84,7 +88,7 @@ CURL:
 }
 ```
 
-####4. Update department
+#### 4. Update department
 --request PUT 'http://localhost:8088/departments' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -105,21 +109,33 @@ CURL:
     ]
 }
 ```
-####5. Delete department
+
+#### 5. Delete department
+
 --request DELETE 'http://localhost:8088/departments/3'
+
 * Status 200, Response
+
 ```
 1
 ```
+
 If department have products, he's not be deleted, and return
+
 * Status 200, Response
+
 ```
 0
 ```
-###Products
-####1. Return all products
---request GET 'http://localhost:8088/products' 
+
+### Products
+
+#### 1. Return all products
+
+--request GET 'http://localhost:8088/products'
+
 * Status 200, Response
+
 ```
 [
     {
@@ -148,7 +164,8 @@ If department have products, he's not be deleted, and return
     }
 ]
 ```
-####2. Get product by ID
+
+#### 2. Get product by ID
 --request GET 'http://localhost:8088/products/2' 
 * Status 200, Response
 ```
@@ -170,7 +187,8 @@ If department have products, he's not be deleted, and return
     ]
 }
 ```
-####3. Sort product by date
+
+#### 3. Sort product by date
  --request GET 'http://localhost:8088/products_sort?from=2021-10-06&to=2021-10-08'
 * Status 200, Response
 ```
@@ -185,7 +203,8 @@ If department have products, he's not be deleted, and return
     }
 ]
 ```
-####4. Create product
+
+#### 4. Create product
 --request POST 'http://localhost:8088/products' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -206,7 +225,8 @@ If department have products, he's not be deleted, and return
   "Name product isn't unique"
   ] }
  ```
-####5. Update product
+
+#### 5. Update product
 --request PUT 'http://localhost:8088/products' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -238,7 +258,8 @@ If department have products, he's not be deleted, and return
     ]
 }
  ```
-####6. Delete product
+
+#### 6. Delete product
 --request DELETE 'http://localhost:8088/products/1'
  ```
  1

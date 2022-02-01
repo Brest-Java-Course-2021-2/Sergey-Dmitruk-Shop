@@ -1,6 +1,5 @@
 package com.epam.brest.service.dto;
 
-import com.epam.brest.Product;
 import com.epam.brest.dto.ProductDto;
 import com.epam.brest.service.ProductDTOService;
 import com.epam.brest.service.config.ServiceTestConfiguration;
@@ -15,7 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @ExtendWith(SpringExtension.class)
@@ -29,9 +29,9 @@ class ProductDTOServiceImplTest {
     @Test
     void sortedProductsByDate() {
         assertNotNull(productDTOService);
-        LocalDate from  = LocalDate.of(2021,10, 1);
-        LocalDate to = LocalDate.of(2021,10,20);
-        List<ProductDto> products = productDTOService.sortedProductsByDate(from,to);
+        LocalDate from = LocalDate.of(2021, 10, 1);
+        LocalDate to = LocalDate.of(2021, 10, 20);
+        List<ProductDto> products = productDTOService.sortedProductsByDate(from, to);
         assertNotNull(products);
         assertTrue(products.size() > 0);
     }

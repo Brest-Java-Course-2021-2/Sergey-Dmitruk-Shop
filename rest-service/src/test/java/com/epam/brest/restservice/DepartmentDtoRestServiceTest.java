@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.client.ExpectedCount;
 import org.springframework.test.web.client.MockRestServiceServer;
@@ -27,29 +26,25 @@ import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @ExtendWith(SpringExtension.class)
 @Import({RestServiceConfigTest.class})
 class DepartmentDtoRestServiceTest {
     private final Logger logger = LogManager.getLogger(DepartmentDtoRestServiceTest.class);
-    private String url = "http://localhost:8080/departments_dto";
-
     @Autowired
     RestTemplate restTemplate;
-
-    private MockRestServiceServer mockServer;
-
-    private ObjectMapper mapper = new ObjectMapper();
-
     DepartmentDtoRestService departmentDtoRestService;
-
+    private String url = "http://localhost:8080/departments_dto";
+    private MockRestServiceServer mockServer;
+    private ObjectMapper mapper = new ObjectMapper();
 
     @BeforeEach
     public void before() {
         mockServer = MockRestServiceServer.createServer(restTemplate);
-        departmentDtoRestService=new DepartmentDtoRestService(url, restTemplate);
+        departmentDtoRestService = new DepartmentDtoRestService(url, restTemplate);
     }
 
     @Test
@@ -58,8 +53,8 @@ class DepartmentDtoRestServiceTest {
         mockServer.expect(ExpectedCount.once(), MockRestRequestMatchers.requestTo(new URI(url)))
                 .andExpect(MockRestRequestMatchers.method(HttpMethod.GET))
                 .andRespond(MockRestResponseCreators.withStatus(HttpStatus.OK)
-                .contentType(MediaType.APPLICATION_JSON)
-                                .body(mapper.writeValueAsString(Arrays.asList(create(0), create(1))))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(mapper.writeValueAsString(Arrays.asList(create(0), create(1))))
                 );
 
 
@@ -70,7 +65,8 @@ class DepartmentDtoRestServiceTest {
         assertTrue(departments.size() > 0);
 
     }
-    private DepartmentDTO create(int id){
+
+    private DepartmentDTO create(int id) {
         DepartmentDTO departmentDTO = new DepartmentDTO();
         departmentDTO.setId_Department(id);
         departmentDTO.setName_Department("Test" + " id" + id);

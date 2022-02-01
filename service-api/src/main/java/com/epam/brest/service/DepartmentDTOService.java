@@ -9,5 +9,4 @@ public interface DepartmentDTOService {
     List<DepartmentDTO> findAllDepartments();
 
 
-
 }

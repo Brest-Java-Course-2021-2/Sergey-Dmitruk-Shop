@@ -29,12 +29,10 @@ public class DepartmentDtoRestService implements DepartmentDTOService {
 
     public List<DepartmentDTO> findAllDepartments() {
         logger.debug("findAllDepartments()");
-        ResponseEntity responseEntity = restTemplate.getForEntity(url,List.class);
+        ResponseEntity responseEntity = restTemplate.getForEntity(url, List.class);
         return (List<DepartmentDTO>) responseEntity.getBody();
 
     }
-
-
 
 
 }

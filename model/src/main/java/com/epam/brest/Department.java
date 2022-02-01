@@ -1,22 +1,24 @@
 package com.epam.brest;
 
 public class Department {
-private Integer idDepartment;
-private String nameDepartment;
-private String responsible;
+    private Integer idDepartment;
+    private String nameDepartment;
+    private String responsible;
 
-public Department(Integer idDepartment){
-    this.idDepartment = idDepartment;
+    public Department(Integer idDepartment) {
+        this.idDepartment = idDepartment;
 
-}
+    }
 
 
-    public Department(){
+    public Department() {
 
- }
-    public Department(String nameDepartment){
+    }
+
+    public Department(String nameDepartment) {
         this.nameDepartment = nameDepartment;
     }
+
     public Department(String nameDepartment, String responsible) {
         this.nameDepartment = nameDepartment;
         this.responsible = responsible;
@@ -42,7 +44,6 @@ public Department(Integer idDepartment){
     public void setNameDepartment(String nameDepartment) {
         this.nameDepartment = nameDepartment;
     }
-
 
 
     public String getResponsible() {

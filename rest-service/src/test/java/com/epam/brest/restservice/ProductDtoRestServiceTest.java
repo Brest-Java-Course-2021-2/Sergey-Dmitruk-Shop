@@ -28,30 +28,26 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 @ExtendWith(SpringExtension.class)
 @Import({RestServiceConfigTest.class})
 class ProductDtoRestServiceTest {
 
-    ProductDtoRestService productDtoRestService;
-
     private final Logger logger = LogManager.getLogger(ProductDtoRestServiceTest.class);
-    private String url = "http://localhost:8080/products_sort";
-
+    ProductDtoRestService productDtoRestService;
     @Autowired
     RestTemplate restTemplate;
-
+    private String url = "http://localhost:8080/products_sort";
     private MockRestServiceServer mockServer;
 
     private ObjectMapper mapper = new ObjectMapper();
 
 
-
     @BeforeEach
     void setUp() {
-        mapper.registerModule( new JavaTimeModule());
+        mapper.registerModule(new JavaTimeModule());
         mockServer = MockRestServiceServer.createServer(restTemplate);
         productDtoRestService = new ProductDtoRestService(url, restTemplate);
     }
@@ -60,7 +56,7 @@ class ProductDtoRestServiceTest {
     void shouldSortedProductsByDate() throws URISyntaxException, JsonProcessingException {
         LocalDate from = LocalDate.of(2021, 10, 1);
         LocalDate to = LocalDate.of(2021, 10, 2);
-        String URI = url+ "?" +  "from=" +from +"&" +"to=" + to;
+        String URI = url + "?" + "from=" + from + "&" + "to=" + to;
         logger.debug("sortedProductsByDate()");
         mockServer.expect(ExpectedCount.once(), MockRestRequestMatchers.requestTo(new URI(URI)))
                 .andExpect(MockRestRequestMatchers.method(HttpMethod.GET))
@@ -71,7 +67,7 @@ class ProductDtoRestServiceTest {
                 );
 
 
-        List<ProductDto> products = productDtoRestService.sortedProductsByDate(from,to);
+        List<ProductDto> products = productDtoRestService.sortedProductsByDate(from, to);
         mockServer.verify();
         assertNotNull(products);
 

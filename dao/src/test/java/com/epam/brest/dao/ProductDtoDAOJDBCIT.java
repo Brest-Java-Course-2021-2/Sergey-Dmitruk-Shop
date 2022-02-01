@@ -1,6 +1,5 @@
 package com.epam.brest.dao;
 
-import com.epam.brest.Product;
 import com.epam.brest.dto.ProductDto;
 import com.epam.brest.testdb.SpringJdbcConfig;
 import org.junit.jupiter.api.Test;
@@ -16,7 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJdbcTest
 @Import({ProductDtoDAOJDBC.class})
@@ -30,24 +30,22 @@ class ProductDtoDAOJDBCIT {
     private ProductDtoDAOJDBC dtoDaoJDBC;
 
     @Autowired
-    public ProductDtoDAOJDBCIT(ProductDtoDAOJDBC productDtoDAOJDBC){
+    public ProductDtoDAOJDBCIT(ProductDtoDAOJDBC productDtoDAOJDBC) {
         this.dtoDaoJDBC = productDtoDAOJDBC;
     }
-
-
 
 
     @Test
     void sortedProductsByDate() {
 
-        LocalDate from  = LocalDate.of(2021,10, 1);
-        LocalDate to = LocalDate.of(2021,10,20);
+        LocalDate from = LocalDate.of(2021, 10, 1);
+        LocalDate to = LocalDate.of(2021, 10, 20);
         assertNotNull(dtoDaoJDBC);
 
-        List<ProductDto> products = dtoDaoJDBC.sortedProductsByDate(from,to);
+        List<ProductDto> products = dtoDaoJDBC.sortedProductsByDate(from, to);
         assertNotNull(products);
         assertTrue(products.size() > 0);
     }
 
 
-    }
+}

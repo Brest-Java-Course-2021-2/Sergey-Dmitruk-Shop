@@ -36,22 +36,19 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProductRestServiceTest {
 
     private final Logger logger = LogManager.getLogger(ProductRestServiceTest.class);
-    private String url = "http://localhost:8080/products";
-
-    private ProductRestService productRestService;
-
     @Autowired
     RestTemplate restTemplate;
-
+    private String url = "http://localhost:8080/products";
+    private ProductRestService productRestService;
     private MockRestServiceServer mockServer;
 
     private ObjectMapper mapper = new ObjectMapper();
 
     @BeforeEach
     void setUp() {
-        mapper.registerModule( new JavaTimeModule());
+        mapper.registerModule(new JavaTimeModule());
         mockServer = MockRestServiceServer.createServer(restTemplate);
-        productRestService = new ProductRestService(url,restTemplate);
+        productRestService = new ProductRestService(url, restTemplate);
     }
 
 
@@ -85,7 +82,7 @@ class ProductRestServiceTest {
                         ));
         Integer idResult = productRestService.createProduct(product);
         mockServer.verify();
-        assertEquals(id,idResult);
+        assertEquals(id, idResult);
     }
 
     @Test
@@ -102,7 +99,7 @@ class ProductRestServiceTest {
                         ));
         Integer idResult = productRestService.updateProduct(product);
         mockServer.verify();
-        assertEquals(id,idResult);
+        assertEquals(id, idResult);
 
     }
 
@@ -119,7 +116,7 @@ class ProductRestServiceTest {
                         ));
         Integer idResult = productRestService.deleteProduct(id);
         mockServer.verify();
-        assertEquals(id,idResult);
+        assertEquals(id, idResult);
 
     }
 
@@ -138,10 +135,11 @@ class ProductRestServiceTest {
         Product result = productRestService.getProductById(id);
         mockServer.verify();
         assertNotNull(result);
-        assertEquals(id,result.getIdProduct());
+        assertEquals(id, result.getIdProduct());
 
 
     }
+
     private Product create(int id) {
         LocalDate date = LocalDate.of(2021, 1, 1);
         Product product = new Product();

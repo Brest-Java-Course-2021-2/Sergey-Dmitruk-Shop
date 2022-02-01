@@ -4,6 +4,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 
 public class ProductNotFoundException extends EmptyResultDataAccessException {
     public ProductNotFoundException(Integer id) {
-        super("Product not found for id " + id,1);
+        super("Product not found for id " + id, 1);
     }
 }

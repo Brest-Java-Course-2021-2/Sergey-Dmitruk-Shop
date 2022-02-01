@@ -9,7 +9,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,30 +31,30 @@ class DepartmentServiceImplIT {
     }
 
     @Test
-    void findAllDepartments(){
+    void findAllDepartments() {
         assertNotNull(departmentService);
         List<Department> departments = departmentService.departmentsFindAll();
         assertTrue(departments.size() > 0);
 
     }
 
-@Test
-void delete(){
-    assertNotNull(departmentService);
-    int departmentSizeBefore = departmentService.count();
-    List<Department> departments = departmentService.departmentsFindAll();
-    assertTrue(departments.size() > 0);
-    departmentService.delete(departments.get(0).getIdDepartment());
-    int departmentSizeAfter = departmentService.count();
-    assertEquals(departmentSizeBefore, departmentSizeAfter + 1);
-}
+    @Test
+    void delete() {
+        assertNotNull(departmentService);
+        int departmentSizeBefore = departmentService.count();
+        List<Department> departments = departmentService.departmentsFindAll();
+        assertTrue(departments.size() > 0);
+        departmentService.delete(departments.get(0).getIdDepartment());
+        int departmentSizeAfter = departmentService.count();
+        assertEquals(departmentSizeBefore, departmentSizeAfter + 1);
+    }
 
     @Test
     void create() {
         assertNotNull(departmentService);
         int departmentSize = departmentService.count();
         assertNotNull(departmentSize);
-        Department department = new Department("Test","ResponsibleTest");
+        Department department = new Department("Test", "ResponsibleTest");
         Integer departmentId =
                 departmentService.create(department);
         assertNotNull(departmentId);
@@ -63,9 +62,9 @@ void delete(){
     }
 
     @Test
-    void shouldCount(){
+    void shouldCount() {
         assertNotNull(departmentService);
-        Integer quantity  =
+        Integer quantity =
                 departmentService.count();
         assertNotNull(quantity);
         assertTrue(quantity > 0);
@@ -82,14 +81,15 @@ void delete(){
             //departmentDaoJDBCImp.create(department);
         });
     }
+
     @Test
-    void update(){
+    void update() {
         assertNotNull(departmentService);
         List<Department> departments = departmentService.departmentsFindAll();
         assertTrue(departments.size() > 0);
         String beforeNameDepartment = departments.get(1).getNameDepartment();
         Department departmentModified =
-        departments.get(1);
+                departments.get(1);
         departmentModified.setNameDepartment("Test");
         String afterNameDepartment = departments.get(1).getNameDepartment();
         departmentService.update(departmentModified);
@@ -103,7 +103,7 @@ void delete(){
         assertNotNull(departmentService);
         Department department = departmentService.getDepartmentById(id);
         String nameDepartment = departmentService.getDepartmentById(id).getNameDepartment();
-        assertEquals(department.getNameDepartment(),nameDepartment);
+        assertEquals(department.getNameDepartment(), nameDepartment);
 
     }
 

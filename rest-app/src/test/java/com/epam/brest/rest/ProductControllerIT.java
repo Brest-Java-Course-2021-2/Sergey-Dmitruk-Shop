@@ -23,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -33,17 +32,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @Transactional
 class ProductControllerIT {
-Logger logger = LogManager.getLogger(ProductControllerIT.class);
+    Logger logger = LogManager.getLogger(ProductControllerIT.class);
 
-@Autowired
-ProductController productController;
+    @Autowired
+    ProductController productController;
     ObjectMapper mapper = new ObjectMapper();
 
     private MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
-        mapper.registerModule( new JavaTimeModule());
+        mapper.registerModule(new JavaTimeModule());
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         mockMvc = MockMvcBuilders.standaloneSetup(productController)
                 .setMessageConverters(new MappingJackson2HttpMessageConverter())
@@ -60,7 +59,7 @@ ProductController productController;
                                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 )
                 .andExpect(jsonPath("$[*]").isArray())
-                .andExpect(jsonPath("$",hasSize(countProducts)))
+                .andExpect(jsonPath("$", hasSize(countProducts)))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk());
     }
@@ -70,7 +69,7 @@ ProductController productController;
         logger.debug("shouldGetProductById()");
         Integer id = 1;
         mockMvc.perform(
-                        get("/products/{id}",id)
+                        get("/products/{id}", id)
                                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                                 .content(mapper.writeValueAsString(id))
                 )
@@ -96,52 +95,55 @@ ProductController productController;
                 .andExpect(content().string("1"))
                 .andExpect(status().isOk());
     }
+
     @Test
-    void shouldCreateProduct()throws Exception{
+    void shouldCreateProduct() throws Exception {
         logger.debug("shouldDeleteProduct()");
-        Integer newId = productController.findAllProducts().size()+1;
-        LocalDate date = LocalDate.of(2021,1,1);
-        Product product = new Product("Test","Dairy",date.toString(),100);
+        Integer newId = productController.findAllProducts().size() + 1;
+        LocalDate date = LocalDate.of(2021, 1, 1);
+        Product product = new Product("Test", "Dairy", date.toString(), 100);
         mockMvc.perform(
-                post("/products")
-                        .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .content(mapper.writeValueAsString(product))
-                        .accept("application/json")
-        ) .andDo(MockMvcResultHandlers.print())
+                        post("/products")
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                .content(mapper.writeValueAsString(product))
+                                .accept("application/json")
+                ).andDo(MockMvcResultHandlers.print())
                 .andExpect(content().string(newId.toString()))
                 .andExpect(status().isOk());
 
     }
+
     @Test
-  void shouldDeleteProduct()throws Exception{
+    void shouldDeleteProduct() throws Exception {
         logger.debug("shouldDeleteProduct()");
         Integer id = 3;
         mockMvc.perform(
-                        delete("/products/{id}",id)
+                        delete("/products/{id}", id)
                                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                                 .content(mapper.writeValueAsString(id))
                                 .accept("application/json")
-                ) .andDo(MockMvcResultHandlers.print())
+                ).andDo(MockMvcResultHandlers.print())
                 .andExpect(content().string("1"))
                 .andExpect(status().isOk());
 
     }
+
     @Test
-    void shouldSortedProductsByDate()throws Exception{
+    void shouldSortedProductsByDate() throws Exception {
         logger.debug("shouldSortedProductsByDate()");
-        LocalDate from  = LocalDate.of(2021,10, 1);
-        LocalDate to = LocalDate.of(2021,10,19);
-        String content = "?" +  "from=" +from +"&" +"to=" + to;
+        LocalDate from = LocalDate.of(2021, 10, 1);
+        LocalDate to = LocalDate.of(2021, 10, 19);
+        String content = "?" + "from=" + from + "&" + "to=" + to;
         mockMvc.perform(
                         get("/products_sort")
                                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                                .param("from",from.toString())
+                                .param("from", from.toString())
                                 .param("to", to.toString())
                                 .accept("application/json")
-                ) .andDo(MockMvcResultHandlers.print())
+                ).andDo(MockMvcResultHandlers.print())
                 .andExpect(jsonPath("$[*]").isArray())
-                .andExpect(jsonPath("$",hasSize(2)))
+                .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(status().isOk());
     }
 
-    }
+}

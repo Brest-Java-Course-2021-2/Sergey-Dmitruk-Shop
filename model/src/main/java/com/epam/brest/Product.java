@@ -1,9 +1,5 @@
 package com.epam.brest;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.time.LocalDate;
-
 public class Product {
     private Integer idProduct;
     private String nameProduct;
@@ -11,8 +7,7 @@ public class Product {
     private String DeliveryTime;
     private Integer price;
     private Integer ipDepartment;
-private String getDate;
-
+    private String getDate;
 
 
     public Product(String nameProduct, String parentDepartmentName, String deliveryTime, Integer price) {
@@ -28,7 +23,7 @@ private String getDate;
         this.parentDepartmentName = parentDepartmentName;
     }
 
-    public Product(){
+    public Product() {
 
     }
 
