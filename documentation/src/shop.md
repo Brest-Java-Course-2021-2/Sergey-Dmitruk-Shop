@@ -1,10 +1,10 @@
 # About project
 ***
-####This app track, editing shop departments and products.
+#### This app track, editing shop departments and products.
 
 ## Departments
 
-####1.Have criterion: 
+#### 1.Have criterion: 
 * Name(changes) 
 * Assortment(changes automatically) - this number products that included in the department.
 * Total cost(changes automatically) - total cost of all products in the department
