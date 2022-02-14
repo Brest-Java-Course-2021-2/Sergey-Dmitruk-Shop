@@ -7,7 +7,7 @@ public class Product {
     private String DeliveryTime;
     private Integer price;
     private Integer ipDepartment;
-    private String getDate;
+
 
 
     public Product(String nameProduct, String parentDepartmentName, String deliveryTime, Integer price) {

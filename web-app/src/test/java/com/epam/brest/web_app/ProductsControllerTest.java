@@ -9,7 +9,6 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,12 +36,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
-@Disabled
-class ProductsControllerIT {
+class ProductsControllerTest {
 
     private ObjectMapper mapper = new ObjectMapper();
 
-    private final Logger logger = LogManager.getLogger(ProductsControllerIT.class);
+    private final Logger logger = LogManager.getLogger(ProductsControllerTest.class);
 
     private final   String URL_PRODUCTS = "http://localhost:8088/products";
     private final   String URL_PRODUCTS_SORT = "http://localhost:8088/products_sort";

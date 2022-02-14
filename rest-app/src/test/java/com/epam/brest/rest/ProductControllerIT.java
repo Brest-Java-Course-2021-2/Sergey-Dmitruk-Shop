@@ -42,8 +42,6 @@ class ProductControllerIT {
 
     @BeforeEach
     void setUp() {
-        mapper.registerModule(new JavaTimeModule());
-        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         mockMvc = MockMvcBuilders.standaloneSetup(productController)
                 .setMessageConverters(new MappingJackson2HttpMessageConverter())
                 .alwaysDo(MockMvcResultHandlers.print())
@@ -133,7 +131,6 @@ class ProductControllerIT {
         logger.debug("shouldSortedProductsByDate()");
         LocalDate from = LocalDate.of(2021, 10, 1);
         LocalDate to = LocalDate.of(2021, 10, 19);
-        String content = "?" + "from=" + from + "&" + "to=" + to;
         mockMvc.perform(
                         get("/products_sort")
                                 .contentType(MediaType.APPLICATION_JSON_VALUE)

@@ -141,7 +141,7 @@ class ProductRestServiceTest {
     }
 
     private Product create(int id) {
-        LocalDate date = LocalDate.of(2021, 1, 1);
+        LocalDate date = LocalDate.of(2021, 1, id);
         Product product = new Product();
         product.setIdProduct(id);
         product.setNameProduct("Test product id = " + id);

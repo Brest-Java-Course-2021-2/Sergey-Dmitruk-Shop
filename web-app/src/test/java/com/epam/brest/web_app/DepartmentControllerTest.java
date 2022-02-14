@@ -3,13 +3,10 @@ package com.epam.brest.web_app;
 import com.epam.brest.Department;
 import com.epam.brest.dto.DepartmentDTO;
 import com.epam.brest.service.DepartmentService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,7 +28,6 @@ import org.springframework.web.context.WebApplicationContext;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Arrays;
 
 import static com.epam.brest.constants.DepartmentConstants.Department_Name_Size;
@@ -44,16 +40,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 @SpringBootTest
-@Disabled
-class DepartmentControllerIT {
+
+class DepartmentControllerTest {
     private ObjectMapper mapper = new ObjectMapper();
 
-    private final Logger logger = LogManager.getLogger(DepartmentControllerIT.class);
+    private final Logger logger = LogManager.getLogger(DepartmentControllerTest.class);
 
     private final String URL_DEPARTMENTS_DTO = "http://localhost:8088/departments_dto";
     private final   String URL_DEPARTMENTS = "http://localhost:8088/departments";

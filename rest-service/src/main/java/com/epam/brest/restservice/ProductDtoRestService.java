@@ -35,14 +35,14 @@ public class ProductDtoRestService implements ProductDTOService {
     public List<ProductDto> sortedProductsByDate(LocalDate from, LocalDate to) {
         logger.debug("sortedProductsByDate({}{})", from, to);
 
-        String URI = url + "?" + "from={from}" + "&" + "to={to}";
+        String URL = url + "?" + "from={from}" + "&" + "to={to}";
 
         Map<String, String> uriParam = new HashMap<>();
         uriParam.put("from", from.toString());
         uriParam.put("to", to.toString());
 
 
-        ResponseEntity responseEntity = restTemplate.getForEntity(URI, List.class, uriParam);
+        ResponseEntity responseEntity = restTemplate.getForEntity(URL, List.class, uriParam);
 
         return (List<ProductDto>) responseEntity.getBody();
     }

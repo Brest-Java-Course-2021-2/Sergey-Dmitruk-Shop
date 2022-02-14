@@ -7,34 +7,34 @@
  <void id="doubleArray0" method="get">
   <object idref="RandomObject0"/>
   <void index="1">
-   <double>0.11864023479370889</double>
+   <double>0.8293964536556541</double>
   </void>
   <void index="2">
-   <double>0.5776429297716761</double>
+   <double>0.9781754755421727</double>
   </void>
   <void index="3">
-   <double>0.679959997523686</double>
+   <double>0.6246840097124338</double>
   </void>
   <void index="4">
-   <double>0.25906490804889737</double>
+   <double>0.7465738745523532</double>
   </void>
   <void index="5">
-   <double>0.8722526759073458</double>
+   <double>0.721263671261167</double>
   </void>
   <void index="6">
-   <double>0.7452004361334259</double>
+   <double>0.4264910828430548</double>
   </void>
   <void index="7">
-   <double>0.23752129696784496</double>
+   <double>0.08600552979807785</double>
   </void>
   <void index="8">
-   <double>0.4816587505122698</double>
+   <double>0.8010619614122326</double>
   </void>
   <void index="9">
-   <double>0.9616753009738028</double>
+   <double>0.5459789011928801</double>
   </void>
   <void index="0">
-   <double>0.9637817873704622</double>
+   <double>0.6473989246242994</double>
   </void>
  </void>
 </void>
@@ -44,34 +44,34 @@
  <void id="doubleArray1" method="get">
   <object idref="RandomObject1"/>
   <void index="1">
-   <double>0.7900071491152277</double>
+   <double>0.47674520771988405</double>
   </void>
   <void index="2">
-   <double>0.6019516159554833</double>
+   <double>0.7908597999373094</double>
   </void>
   <void index="3">
-   <double>0.9564979631671638</double>
+   <double>0.6906901984393349</double>
   </void>
   <void index="4">
-   <double>0.4337176380155572</double>
+   <double>0.15380568963260688</double>
   </void>
   <void index="5">
-   <double>0.35182752999562816</double>
+   <double>0.6389633330729855</double>
   </void>
   <void index="6">
-   <double>0.003966530193652451</double>
+   <double>0.3080445091793429</double>
   </void>
   <void index="7">
-   <double>0.6672213935724857</double>
+   <double>0.2821898593983747</double>
   </void>
   <void index="8">
-   <double>0.8432305920021556</double>
+   <double>0.1960373638370222</double>
   </void>
   <void index="9">
-   <double>0.040684561109332495</double>
+   <double>0.7123724788475783</double>
   </void>
   <void index="0">
-   <double>0.37885360069538165</double>
+   <double>0.08594249254822606</double>
   </void>
  </void>
 </void>

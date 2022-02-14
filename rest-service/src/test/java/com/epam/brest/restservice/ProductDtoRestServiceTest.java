@@ -66,7 +66,6 @@ class ProductDtoRestServiceTest {
                         .body(mapper.writeValueAsString(Arrays.asList(create(1), create(5))))
                 );
 
-
         List<ProductDto> products = productDtoRestService.sortedProductsByDate(from, to);
         mockServer.verify();
         assertNotNull(products);
